@@ -1,0 +1,37 @@
+name: 自动双源无损强行合并-备用线
+
+on:
+  schedule:
+    - cron: '0 0,12 * * *'  # 每天北京时间早上8点、晚上8点自动更新
+  workflow_dispatch:      # 允许随时手动点击触发
+
+jobs:
+  fetch-and-sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout own repo
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Fetch upstream data
+      run: |
+        mkdir -p datas
+        # 抓取最新的 CNB 接口
+        curl -s -L "https://cnb.cool/fish2018/xs/-/git/raw/main/api.json" -o datas/cnb.json
+        # 抓取最新的海豚接口
+        curl -s -L "https://ghfast.top/https://raw.githubusercontent.com/IY-CPU/IY/main/百分百.json" -o datas/haitun.json
+
+    - name: Run fusion script
+      run: python modify_config.py
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add datas/老杨TV.json
+        git diff --quiet && git diff --staged --quiet || (git commit -m "自动同步最新双源接口" && git push)
