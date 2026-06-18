@@ -3,7 +3,7 @@ import re
 
 cnb_path = 'datas/cnb.json'
 haitun_path = 'datas/haitun.json'
-output_path = 'datas/老杨TV.json'  # 🌟 已经精准修改为你的专属后缀文件名
+output_path = 'datas/老杨TV.json'  # 🌟 专属后缀文件名
 
 def read_file_text(path):
     if not os.path.exists(path):
@@ -30,6 +30,16 @@ def get_array_inner_text(content, key):
 
 haitun_sites_text = get_array_inner_text(text_haitun, "sites")
 haitun_lives_text = get_array_inner_text(text_haitun, "lives")
+
+# ====================================================================
+# 【海豚专属尾缀手术】在合并前，单独为海豚的线路名称末尾加上 ｜Tg：@huliys9
+# ====================================================================
+# 🛠️ 1 & 2. 更改此处的分隔符为 ｜
+name_regex = r'"name"\s*:\s*"([^"]+)"'
+if haitun_sites_text:
+    haitun_sites_text = re.sub(name_regex, r'"name": "\1｜Tg：@huliys9"', haitun_sites_text)
+if haitun_lives_text:
+    haitun_lives_text = re.sub(name_regex, r'"name": "\1｜Tg：@huliys9"', haitun_lives_text)
 
 # ====================================================================
 # 2. 逆向注入：把海豚的内容，无缝贴进 CNB 对应的数组最前面
@@ -71,14 +81,73 @@ final_json_text = final_json_text.replace('./py/', 'https://cnb.cool/fish2018/xs
 # ====================================================================
 # 4. 定制老杨自用全量缝合专线 brand 头部
 # ====================================================================
-final_json_text = final_json_text.replace('"warningText": "欢迎使用鱼儿自用缝合专线，完全免费！"', '"warningText": "欢迎使用老杨自用全量缝合专线，本接口完全免费！"')
+# 1. 精准锁定头部唯一图片，替换为你的专属蝴蝶 Logo 链接
+final_json_text = final_json_text.replace(
+    '"logo": "http://127.0.0.1:9978/file/TVBox/logo.png"', 
+    '"logo": "https://img.naixiai.cn/2026/06/18/IMG_6638.jpeg"'
+)
 
-# 强力消除尾部符号瑕疵
-final_json_text = re.sub(r'\[\s*,', '[', final_json_text)
-final_json_text = re.sub(r',\s*\]', '\n  ]', final_json_text)
+# 2. 锁定 JSON 唯一的开头首行，精准插入专属长篇致谢声明
+if '"warningText":' not in final_json_text:
+    thanks_warning = (
+        '👑 特别致谢与版权声明\\n'
+        '本接口的诞生离不开大后方两位业内顶流技术大佬的无私奉献，特此致谢：\\n'
+        '🐋 感谢鱼佬的付出\\n'
+        '源码基础与发布主页: fish2018/webhtv\\n'
+        '版本发布绝对地址: fish2018/webhtv/releases\\n'
+        'Telegram 官方群组: 👉 https://t.me/webhtv\\n'
+        '🐬 感谢海豚佬的付出\\n'
+        '核心仓库主页: FGBLH/GHK\\n'
+        '数据源直链地址: FGBLH/GHK/海豚.json\\n'
+        'Telegram 官方群组: 👉 https://t.me/hshsjk9'
+    )
+    final_json_text = final_json_text.replace(
+        '{\n    "spider":',
+        f'{{\n    "warningText": "{thanks_warning}",\n    "spider":'
+    )
+
+# ====================================================================
+# 5. 全方位名称大清洗与品牌脱敏手术
+# ====================================================================
+# 1. 批量拔除各种旧品牌的残留和无关话术
+final_json_text = final_json_text.replace('🐬', '')
+final_json_text = final_json_text.replace('海豚影视', '')
+final_json_text = final_json_text.replace('海豚', '')
+final_json_text = final_json_text.replace('完全免费，如有收费的都是骗子', '')
+final_json_text = final_json_text.replace('交流群 TG：@hshsjk9', '')
+
+# 2. 精准格式化与全线路 🦋 前缀注入
+def clean_and_add_butterfly(match):
+    name_val = match.group(1)
+    
+    # 🛠️ 3. 更改脱敏函数内部的截取特征为 ｜
+    tg_suffix = ""
+    if "｜Tg：@huliys9" in name_val:
+        name_val = name_val.replace("｜Tg：@huliys9", "")
+        tg_suffix = "｜Tg：@huliys9"
+        
+    # 清洗核心线路名称两端的杂质字符 (注意：这里不要包含 ｜，否则会被误切)
+    for char in ['丨', '┃', ' ']:
+        name_val = name_val.strip(char)
+        
+    # 修复名称中间的多余双空格
+    name_val = re.sub(r'\s+', ' ', name_val)
+    
+    # 重新组装：🦋 + 清洗后的名称 + [｜Tg：@huliys9]
+    return f'"name": "🦋{name_val}{tg_suffix}"'
+
+final_json_text = re.sub(r'"name"\s*:\s*"([^"]+)"', clean_and_add_butterfly, final_json_text)
+
+# ====================================================================
+# 6. 安全、高效地消除尾部逗号瑕疵（摒弃危险的正则回溯）
+# ====================================================================
+final_json_text = final_json_text.replace('[\n    ,', '[')
+final_json_text = final_json_text.replace('[\n,', '[')
+final_json_text = final_json_text.replace(',\n    ]', '\n    ]')
+final_json_text = final_json_text.replace(',\n  ]', '\n  ]')
 
 # 写入本地文件存盘
 with open(output_path, 'w', encoding='utf-8') as f:
     f.write(final_json_text)
 
-print("🎉 【专属定制版】已经成功输出为 老杨TV.json！")
+print("🎉 【全角 ｜ 符号替换版】已更新成功！")
