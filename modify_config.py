@@ -36,7 +36,8 @@ else:
             f.write(current_token)
         print(f"⏰ 【密锁强制纠偏/新月抽签】已生成全量版严格 3 位新密锁: {current_token}")
 
-output_filename = f"老杨TV{current_token}.json"
+# 🎯 已经帮你把最终输出的文件名修改为了：老杨TV全功能版 + 随机暗号
+output_filename = f"老杨TV全功能版{current_token}.json"
 output_path = f"datas/{output_filename}"
 
 # ====================================================================
@@ -174,7 +175,6 @@ if '"warningText":' not in final_json_text:
         'Telegram 官方群组: 👉 https://t.me/hshsjk9'
     )
     
-    # 🌟 核心修改点：这里直接在正规订阅的最顶部注入专属开机公告大白框（带正确换行符）
     welcome_notice = (
         '👑 欢迎使用【老杨TV粉丝专属缝合专线】！'
         '本接口由老杨TV结合海 豚佬&鱼佬的优质资源缝合而成，纯净无广告！'
@@ -205,22 +205,9 @@ def clean_and_add_butterfly(match):
     name_val = re.sub(r'\s+', ' ', name_val)
     return f'"name": "🦋{name_val}{tg_suffix}"'
 
-final_json_text = re.sub(r'"name"\s*:\s*"([^"]+)"', clean_and_add_butterfly, final_json_text)
-
-final_json_text = final_json_text.replace(
-    '"name": "🦋爱奇艺｜Tg：@huliys9"',
-    '"name": "🦋爱奇艺｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜@huliys9"'
-)
-
-final_json_text = final_json_text.replace('[\n    ,', '[')
-final_json_text = final_json_text.replace('[\n,', '[')
-final_json_text = final_json_text.replace(',\n    ]', '\n    ]')
-final_json_text = final_json_text.replace(',\n  ]', '\n  ]')
-
-with open(output_path, 'w', encoding='utf-8') as f:
-    f.write(final_json_text)
-
-with open(tracker_path, 'w', encoding='utf-8') as f:
-    f.write(output_filename)
-
-print(f"🎉 【全量纯文字大轰炸+开机大白框公告版】更新成功！配置名: {output_path}")
+# 🚀 【核心卡顿修复：靶向隔离】
+# 只对前半段包含 sites（影视按钮）的区域加蝴蝶，后半段包含上千个直播频道的 lives 保持纯文本不加蝴蝶，电视完美丝滑加载
+if '"sites": [' in final_json_text and '"lives": [' in final_json_text:
+    parts = final_json_text.split('"lives": [', 1)
+    parts[0] = re.sub(r'"name"\s*:\s*"([^"]+)"', clean_and_add_butterfly, parts[0])
+    final_json_text = '"lives":
