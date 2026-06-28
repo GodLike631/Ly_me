@@ -15,21 +15,27 @@ lock_file_path = 'datas/控制开关.txt'
 tracker_path = 'datas/最新接口文件名.txt'
 
 # ====================================================================
-# ⏰ 【每月 1 号自动大洗牌逻辑回归与全量版融合】
+# ⏰ 【每月 1 号自动大洗牌与控制开关清空自动生成逻辑】
 # ====================================================================
 today = datetime.datetime.now()
 is_reset_day = (today.day == 1)
 
 current_token = "全量版"
 
-# 1. 先尝试读取现有的开关状态
+# 1. 尝试读取现有的开关状态
 if os.path.exists(lock_file_path):
     with open(lock_file_path, 'r', encoding='utf-8') as f:
         current_token = f.read().strip()
 
-# 2. 如果是 1 号，且目前开关里还不是 3 位随机暗号（说明是当月第一次跑，或者是全量版字样）
-# 则强制触发大洗牌，自动抽签 3 位新密码并写入控制开关
-if is_reset_day and (current_token == "全量版" or len(current_token) != 3):
+# 🎯 【核心新增】：如果控制开关被你手动清空了（或全是空格）
+if not current_token:
+    current_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=3))
+    with open(lock_file_path, 'w', encoding='utf-8') as f:
+        f.write(current_token)
+    print(f"🎲 【探测到开关为空】已自动随机生成 3 位新密码并写入开关: {current_token}")
+
+# 2. 如果是 1 号，且目前开关里还不是 3 位随机暗号（说明是当月第一次跑，或者是全量版/纯净版字样）
+if is_reset_day and (current_token in ["全量版", "纯净版"] or len(current_token) != 3):
     current_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=3))
     with open(lock_file_path, 'w', encoding='utf-8') as f:
         f.write(current_token)
@@ -38,7 +44,7 @@ elif is_reset_day:
     print(f"🔒 【安全阀拦截】今日 1 号已完成过大洗牌，本次保持原暗号不再重复抽签: {current_token}")
 
 # 3. 🎯 严格判定最终输出的文件名（固定带上“全量版”）
-if current_token == "全量版":
+if current_token in ["全量版", "纯净版"]:
     output_filename = "老杨TV全量版.json"
 else:
     output_filename = f"老杨TV全量版{current_token}.json"
@@ -47,9 +53,9 @@ output_path = f"datas/{output_filename}"
 print(f"🎯 最终结算 -> 目标输出：{output_filename}")
 
 # ====================================================================
-# 🛡️ 【金蝉脱壳：过期旧线自动全文字大轰炸】
+# 🛡️ 【金蝉脱壳：全量版过期旧线自动全文字大轰炸】
 # ====================================================================
-old_configs = glob.glob('datas/老杨TV*.json')
+old_configs = glob.glob('datas/老杨TV全量版*.json') + glob.glob('datas/老杨TV*.json')
 for old_file in old_configs:
     if os.path.basename(old_file) != output_filename:
         try:
@@ -58,7 +64,7 @@ for old_file in old_configs:
                 "notice": f"⚠️ 警告：当前专线已过期断流！老链接已彻底作废！\n\n最新全量版链接或当前密码请加QQ群“532637640”获取",
                 "warningText": "👑 特别提示：加QQ群“532637640”获取最新接口",
                 "sites": [
-                    {"key": "老杨纯文字提示", "name": "🚨 请前往QQ群“532637640”获取最新全量版链接🚨 当前专线密码已过期断流！", "type": 3, "api": "csp_JuDou", "searchable": 0, "quickSearch": 0, "filterable": 0},
+                    {"key": "老杨纯文字提示", "name": "🚨 请前往QQ群“532637640”获取最新密码🚨 当前专线密码已过期断流！", "type": 3, "api": "csp_JuDou", "searchable": 0, "quickSearch": 0, "filterable": 0},
                     {"key": "老杨纯文字提示2", "name": "🚨 请前往QQ群“532637640”获取最新全量版链接", "type": 3, "api": "csp_JuDou", "searchable": 0, "quickSearch": 0, "filterable": 0}
                 ],
                 "lives": [
@@ -77,7 +83,7 @@ for garbage in glob.glob('datas/config_*.json'):
 
 
 # ====================================================================
-# 🧠 【核心重构：正统 JSON 对象读取与合并逻辑】
+# 🧠 【核心逻辑：正统 JSON 对象读取与合并逻辑】
 # ====================================================================
 def load_json_safe(path):
     if not os.path.exists(path):
@@ -89,7 +95,6 @@ def load_json_safe(path):
             print(f"❌ 错误：{path} JSON 格式不正确！无法解析。")
             return {}
 
-# 1. 载入标准 JSON 对象
 json_cnb = load_json_safe(cnb_path)
 json_haitun = load_json_safe(haitun_path)
 json_lz = load_json_safe(lz_path)
@@ -98,7 +103,7 @@ haitun_sites = json_haitun.get("sites", [])
 haitun_lives = json_haitun.get("lives", [])
 lz_sites = json_lz.get("sites", [])
 
-# 2. 过滤老张源里的 🔞 站点并转换为绝对路径
+# 过滤老张源里的 🔞 站点并转换为绝对路径
 lz_nsfw_list = []
 for item in lz_sites:
     if "🔞" in item.get("name", ""):
@@ -114,7 +119,7 @@ for item in lz_sites:
                 item["api"] = item["api"].replace("./", "https://gh-proxy.com/https://raw.githubusercontent.com/ediart/tvbox/refs/heads/main/lz/")
         lz_nsfw_list.append(item)
 
-# 3. 给海豚源打上后缀标签
+# 给海豚源打上后缀标签
 for item in haitun_sites:
     if "name" in item:
         item["name"] = f"{item['name']}｜Tg：@huliys9"
@@ -122,7 +127,7 @@ for item in haitun_lives:
     if "name" in item:
         item["name"] = f"{item['name']}｜Tg：@huliys9"
 
-# 4. 精准插入“乡村电视”到直播数组索引 5（第 6 位）
+# 精准插入“乡村电视”到直播数组索引 5（第 6 位）
 country_live_dict = {
     "name": "乡村电视 ｜Tg：@huliys9",
     "type": 0,
@@ -135,15 +140,11 @@ if len(haitun_lives) >= 5:
 else:
     haitun_lives.append(country_live_dict)
 
-# ====================================================================
-# 🚀 数组大合并
-# ====================================================================
+# 数组大合并
 json_cnb["sites"] = haitun_sites + lz_nsfw_list
 json_cnb["lives"] = haitun_lives
 
-# ====================================================================
-# 📝 转换为文本后进行清洗与特调
-# ====================================================================
+# 转换为文本后进行清洗与特调
 final_json_text = json.dumps(json_cnb, ensure_ascii=False, indent=4)
 
 final_json_text = final_json_text.replace('"key": "hajim-腾讯备"', '"spider": "./tvbox.jar",\n            "key": "hajim-腾讯备"')
@@ -164,9 +165,7 @@ path_replacements = {
 for src, dst in path_replacements.items():
     final_json_text = final_json_text.replace(src, dst)
 
-# ====================================================================
-# 🎯 开机大公告栏提示注入
-# ====================================================================
+# 开机公告注入
 thanks_warning = "👑 特别致谢与版权声明\n本接口的诞生离不开大后方几位业内顶流技术大佬的无私奉献，特此致谢：\n🐋 感谢鱼佬的付出\n源码基础与发布主页: fish2018/webhtv\n版本发布绝对地址: fish2018/webhtv/releases\nTelegram 官方群组: 👉 https://t.me/webhtv\n 感谢佬的付出\n核心仓库主页: FGBLH/GHK\n数据源直链地址: FGBLH/GHK/.json\nTelegram 官方群组: 👉 https://t.me/hshsjk9"
 welcome_notice = "👑 欢迎使用【老杨TV粉丝专属缝合专线】！本接口由老杨TV结合海豚佬&鱼佬的优质核心资源缝合而成，纯净无广告！🚨 重要提示：本接口密码不定期全自动更换！如果遇到失效或断流，请及时回 Telegram 频道（@huliys9）或微信群获取当前最新密码！"
 
@@ -180,7 +179,7 @@ try:
     if "warningText" in final_obj: ordered_obj["warningText"] = final_obj.pop("warningText")
     ordered_obj.update(final_obj)
     
-    # 🦋 【高级加蝴蝶逻辑】
+    # 🦋 加蝴蝶逻辑
     for site in ordered_obj.get("sites", []):
         if "name" in site:
             name_val = site["name"]
@@ -194,14 +193,13 @@ try:
         if "key" in site and site["key"] == "AQY":
             site["name"] = "🦋 爱奇艺｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜@huliys9"
 
-    # 写出最终文件
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(ordered_obj, f, ensure_ascii=False, indent=4)
         
     with open(tracker_path, 'w', encoding='utf-8') as f:
         f.write(output_filename)
         
-    print(f"🎉 更新成功！配置已写出至: {output_path}")
+    print(f"🎉 全量版更新成功！配置已写出至: {output_path}")
 
 except Exception as e:
     print(f"❌ 严重错误：最后的本地渲染失败，原因: {e}")
