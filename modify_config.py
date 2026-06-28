@@ -27,7 +27,7 @@ if os.path.exists(lock_file_path):
     with open(lock_file_path, 'r', encoding='utf-8') as f:
         current_token = f.read().strip()
 
-# 🎯 【核心新增】：如果控制开关被你手动清空了（或全是空格）
+# 🎯 如果控制开关被手动清空了（或全是空格）
 if not current_token:
     current_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=3))
     with open(lock_file_path, 'w', encoding='utf-8') as f:
@@ -140,9 +140,14 @@ if len(haitun_lives) >= 5:
 else:
     haitun_lives.append(country_live_dict)
 
-# 数组大合并
-json_cnb["sites"] = haitun_sites + lz_nsfw_list
-json_cnb["lives"] = haitun_lives
+# ====================================================================
+# 🚀 数组大合并：完美保留 cnb 自身原有接口并融入海豚和老张
+# ====================================================================
+cnb_sites = json_cnb.get("sites", [])
+cnb_lives = json_cnb.get("lives", [])
+
+json_cnb["sites"] = cnb_sites + haitun_sites + lz_nsfw_list
+json_cnb["lives"] = cnb_lives + haitun_lives
 
 # 转换为文本后进行清洗与特调
 final_json_text = json.dumps(json_cnb, ensure_ascii=False, indent=4)
