@@ -188,7 +188,7 @@ for src, dst in path_replacements.items():
 
 # 开机公告注入 (原汁原味保留老杨TV公告)
 thanks_warning = "👑 特别致谢与版权声明\n本接口的诞生离不开大后方几位业内顶流技术大佬的无私奉献，特此致谢：\n🐋 感谢鱼佬的付出\n源码基础与发布主页: fish2018/webhtv\n版本发布绝对地址: fish2018/webhtv/releases\nTelegram 官方群组: 👉 https://t.me/webhtv\n 感谢佬的付出\n核心仓库主页: FGBLH/GHK\n数据源直链地址: FGBLH/GHK/.json\nTelegram 官方群组: 👉 https://t.me/hshsjk9"
-welcome_notice = "👑 欢迎使用【老杨TV粉丝专属缝合专线】！本接口由老杨TV结合佬&鱼佬的优质核心资源缝合而成，纯净无广告！🚨 重要提示：本接口密码不定期全自动更换！如果遇到失效或断流，请及时回 Telegram 频道（@huliys9）或微信群获取当前最新密码！"
+welcome_notice = "👑 欢迎使用【老杨TV粉丝专属缝合专线】！本接口由老杨TV结合佬&鱼佬的优质核心资源缝合而成，纯净无广告！🚨 重要提示：本接口密码不定期全自动更换！如果遇到失效 or 断流，请及时回 Telegram 频道（@huliys9）或微信群获取当前最新密码！"
 
 try:
     final_obj = json.loads(final_json_text)
@@ -200,24 +200,95 @@ try:
     if "warningText" in final_obj: ordered_obj["warningText"] = final_obj.pop("warningText")
     ordered_obj.update(final_obj)
     
-    # 🦋 加 transition 蝴蝶逻辑 (做报错防阻断保护)
+    # ====================================================================
+    # 🌟【全新深度体验优化区】（在原代码蝴蝶逻辑处平滑扩展）
+    # ====================================================================
     try:
+        # --- 1. 注入国内高防 AliDNS 到 doh 的最前面 ---
+        if "doh" in ordered_obj and isinstance(ordered_obj["doh"], list):
+            ali_doh = {
+                "name": "AliDNS",
+                "url": "https://dns.alidns.com/dns-query",
+                "ips": ["223.5.5.5", "223.6.6.6"]
+            }
+            # 检查是否已存在，不存在则塞到首位，防解析堵塞
+            if not any(d.get("name") == "AliDNS" for d in ordered_obj["doh"]):
+                ordered_obj["doh"].insert(0, ali_doh)
+
+        # --- 2. 彻底移除直播 lives 末尾的无用空对象 {} ---
+        if "lives" in ordered_obj and isinstance(ordered_obj["lives"], list):
+            # 过滤掉没有任何键值对的空字典，杜绝电视闪退
+            ordered_obj["lives"] = [live for live in ordered_obj["lives"] if live]
+
+        # --- 3. 站点（sites）名称特调：精准保留前5个TG尾巴 + 智能自动分类 ---
+        tg_tail_count = 0  # 追踪带有指定尾巴的站点计数
+        
         for site in ordered_obj.get("sites", []):
             if "name" in site:
                 name_val = site["name"]
+                
+                # A. 基础去噪处理（原逻辑）
                 for char in ['丨', '┃', ' ']:
                     name_val = name_val.strip(char)
                 name_val = re.sub(r'\s+', ' ', name_val)
-                if not name_val.startswith("🦋"):
-                    site["name"] = f"🦋 {name_val}"
+                
+                # B. 【核心需求】智能处理 ｜Tg：@huliys9 后缀
+                if "｜Tg：@huliys9" in name_val:
+                    tg_tail_count += 1
+                    if tg_tail_count > 5:
+                        # 超过 5 个，切掉小尾巴
+                        name_val = name_val.replace("｜Tg：@huliys9", "").strip()
+                elif "｜Tg:@huliys9" in name_val:
+                    tg_tail_count += 1
+                    if tg_tail_count > 5:
+                        name_val = name_val.replace("｜Tg:@huliys9", "").strip()
 
+                # C. 强制加上蝴蝶图标（原逻辑）
+                if not name_val.startswith("🦋"):
+                    name_val = f"🦋 {name_val}"
+                
+                site["name"] = name_val
+
+                # D. 【蜂蜜高级优化】根据站点属性自动划分左侧大类（Category）
+                s_key = site.get("key", "")
+                s_api = str(site.get("api", ""))
+                s_genre = site.get("genre", "")
+                
+                if s_genre == "shortdrama" or "短剧" in name_val or "dj" in s_key.lower():
+                    site["category"] = "短剧"
+                elif "🔞" in name_val or "色播" in name_val or "av" in s_key.lower() or "瓜" in name_val or "爆料" in name_val:
+                    site["category"] = "福利"
+                    # 福利站不污染全局搜索和大厅
+                    site["searchable"] = 0
+                    site["quickSearch"] = 0
+                elif "少儿" in name_val or "课堂" in name_val or "教学" in name_val:
+                    site["category"] = "少儿"
+                    site["searchable"] = 0
+                elif "音乐" in name_val or "网易云" in name_val or "听书" in name_val or "唱会" in name_val or "FM" in name_val:
+                    site["category"] = "音乐"
+                    site["searchable"] = 0
+                elif "动漫" in name_val or "新番" in name_val or "Anime" in s_key:
+                    site["category"] = "动漫"
+                elif "磁力" in name_val or "索" in name_val or "盘" in name_val or "云盘" in name_val or "4K" in name_val:
+                    site["category"] = "网盘/磁力"
+                elif "体育" in name_val or "球" in name_val or "直播" in name_val:
+                    site["category"] = "体育/直播"
+                else:
+                    # 常规影视站
+                    site["category"] = "综合"
+
+        # E. 特殊核心大厂站点的固定命名覆写（原逻辑）
         for site in ordered_obj.get("sites", []):
             if "key" in site and site["key"] == "AQY":
                 site["name"] = "🦋 爱奇艺｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜@huliys9"
+                site["category"] = "综合"
+    
     except Exception as inner_e:
-        print(f"⚠️ 提示：美化蝴蝶图标时跳过，原因: {inner_e}")
+        print(f"⚠️ 提示：美化与智能优化阶段跳过，原因: {inner_e}")
 
-    # 🌟【前置写入】强制安全落盘
+    # ====================================================================
+    # 🌟【数据安全落盘】
+    # ====================================================================
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(ordered_obj, f, ensure_ascii=False, indent=4)
         
@@ -229,7 +300,7 @@ try:
 except Exception as e:
     print(f"❌ 严重错误：最后的本地渲染失败，原因: {e}")
 
-# 🌟 双重保险
+# 🌟 双重保险（原逻辑）
 if not os.path.exists(lock_file_path) or "-" not in (open(lock_file_path, 'r', encoding='utf-8').read() if os.path.exists(lock_file_path) else ""):
     with open(lock_file_path, 'w', encoding='utf-8') as f:
         f.write(f"{current_month}-{current_token}")
