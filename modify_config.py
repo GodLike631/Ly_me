@@ -258,9 +258,8 @@ try:
                     site["category"] = "短剧"
                 elif "🔞" in name_val or "色播" in name_val or "av" in s_key.lower() or "瓜" in name_val or "爆料" in name_val:
                     site["category"] = "福利"
-                    # 福利站不污染全局搜索和大厅
-                    site["searchable"] = 0
-                    site["quickSearch"] = 0
+                    # 🎯 【靶向恢复】：不再强行锁死 searchable=0，完全交由上游站点默认行为，粉丝可在首页直接搜出福利片
+                    pass 
                 elif "少儿" in name_val or "课堂" in name_val or "教学" in name_val:
                     site["category"] = "少儿"
                     site["searchable"] = 0
