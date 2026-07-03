@@ -1690,7 +1690,8 @@
             "ext": "https://ghfast.top/https://raw.githubusercontent.com/IY-CPU/IY/main/lib/茫茫.png",
             "category": "网盘/磁力",
             "searchable": 0,
-            "quickSearch": 0
+            "quickSearch": 0,
+            "changeable": 1
         },
         {
             "key": "玩偶",
@@ -1866,7 +1867,7 @@
             "key": "夸父",
             "name": "🦋 夸父 • 4K",
             "type": 3,
-            "api": "csp_PanWebShareKF",
+            "api": "csp_PanWebShare",
             "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
@@ -1888,7 +1889,7 @@
             "key": "盘它",
             "name": "🦋 盘它 • 4K",
             "type": 3,
-            "api": "csp_PanWebSharePT",
+            "api": "csp_PanWebShare",
             "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
@@ -1903,7 +1904,7 @@
             "key": "123",
             "name": "🦋 123 • 4K",
             "type": 3,
-            "api": "csp_PanWebShare123",
+            "api": "csp_PanWebShare",
             "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
@@ -1930,7 +1931,8 @@
             "quickSearch": 0,
             "filterable": 1,
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "人人",
@@ -1941,7 +1943,8 @@
             "quickSearch": 0,
             "filterable": 1,
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "即刻",
@@ -1955,7 +1958,8 @@
                 "type": "list"
             },
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "双星",
@@ -1969,7 +1973,8 @@
                 "type": "list"
             },
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "荐片",
@@ -1978,7 +1983,8 @@
             "type": 3,
             "category": "网盘/磁力",
             "searchable": 0,
-            "quickSearch": 0
+            "quickSearch": 0,
+            "changeable": 1
         },
         {
             "key": "七味",
@@ -1989,7 +1995,8 @@
             "quickSearch": 0,
             "filterable": 1,
             "ext": "https://www.qwshow.com,https://www.qwmkv.com,https://www.qwfilm.com,https://www.qwfun.com,https://www.qnnull.com,https://www.qnnull.com",
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "New6v",
@@ -2000,7 +2007,8 @@
             "quickSearch": 0,
             "filterable": 1,
             "ext": "https://www.xb6v.com",
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "美剧迷",
@@ -2010,7 +2018,8 @@
             "searchable": 0,
             "quickSearch": 0,
             "filterable": 1,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "迅雷吧",
@@ -2021,7 +2030,8 @@
             "quickSearch": 0,
             "filterable": 1,
             "ext": "https://xunlei8.me",
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "电影港",
@@ -2032,7 +2042,8 @@
             "quickSearch": 0,
             "filterable": 1,
             "ext": "https://cnb.cool/fish2018/xs/-/git/raw/main/XYQHiker/电影港.json",
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "阿里云盘",
@@ -2041,7 +2052,7 @@
             "api": "csp_PanAli",
             "searchable": 0,
             "filterable": 0,
-            "changeable": 0,
+            "changeable": 1,
             "style": {
                 "type": "list",
                 "ratio": 1.433
@@ -2056,7 +2067,7 @@
             "api": "csp_PanQuark",
             "searchable": 0,
             "filterable": 0,
-            "changeable": 0,
+            "changeable": 1,
             "style": {
                 "type": "list",
                 "ratio": 1.433
@@ -2071,7 +2082,7 @@
             "api": "csp_PanUC",
             "searchable": 0,
             "filterable": 0,
-            "changeable": 0,
+            "changeable": 1,
             "style": {
                 "type": "list",
                 "ratio": 1.433
@@ -2086,7 +2097,7 @@
             "api": "csp_PanBaidu",
             "searchable": 0,
             "filterable": 0,
-            "changeable": 0,
+            "changeable": 1,
             "style": {
                 "type": "list",
                 "ratio": 1.433
@@ -2103,7 +2114,8 @@
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "古哥",
@@ -2114,7 +2126,8 @@
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "百酷",
@@ -2125,7 +2138,8 @@
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "米搜",
@@ -2136,7 +2150,8 @@
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "鬼鬼",
@@ -2147,7 +2162,8 @@
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "混合",
@@ -2158,7 +2174,8 @@
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "天翼",
@@ -2169,7 +2186,8 @@
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "趣盘",
@@ -2180,7 +2198,8 @@
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "changeable": 1
         },
         {
             "key": "aidan",
