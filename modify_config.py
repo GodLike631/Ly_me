@@ -99,9 +99,9 @@ def load_json_safe(path):
             print(f"❌ 错误：{path} JSON 格式不正确！无法解析。")
             return {}
 
-json_cnb = load_json_safe(cnb_path)
 json_haitun = load_json_safe(haitun_path)
 json_lz = load_json_safe(lz_path)
+json_cnb = load_json_safe(cnb_path)
 
 haitun_sites = json_haitun.get("sites", [])
 haitun_lives = json_haitun.get("lives", [])
@@ -254,12 +254,12 @@ try:
                     clean_lives.append(live)
             ordered_obj["lives"] = clean_lives
 
-        # --- 5 & 6. 🏆【核心重写：单线清洗、打标、九大方阵动态完美洗牌算法】 ---
+        # --- 5 & 6. 🏆【核心重写：单线清洗、打标、网盘组件重写、九大方阵动态完美洗牌算法】 ---
         block_1_douban = []       # 1. 豆瓣首页专享
         block_2_yingshi = []      # 2. 影视/追剧/APP大类 (占据最强检索权)
         block_3_duanju = []       # 3. 短剧/剧场
         block_4_dongman = []      # 4. 动漫类
-        block_5_cili = []         # 5. 网盘/磁力/4K (被屏蔽后台主动搜索)
+        block_5_cili = []         # 5. 网盘/磁力/4K (对齐标准，未配Token不加载)
         block_6_tiyu = []         # 6. 体育/看球/直播
         block_7_shaoer = []       # 7. 少儿课堂/教育
         block_8_yinyue = []       # 8. 音乐/听书/功能线/DJ
@@ -274,6 +274,7 @@ try:
             raw_name = site["name"]
             s_key = site.get("key", "")
             s_genre = site.get("genre", "")
+            s_api = site.get("api", "")
 
             # 🛠️ 1. 清洗名称里的脏字符
             for char in ['丨', '┃', ' ']:
@@ -290,13 +291,20 @@ try:
             if "ext" in site and site["ext"] == {}:
                 site["ext"] = ""
 
-            # 🛠️ 2. 瓜子靶向保护：防误伤，强力摘出
+            # 🛠️ 2. 【核心修复】网盘/磁力组件全线无缝洗白！去除魔改后缀，对齐原生内置机制
+            if isinstance(s_api, str) and "PanWebShare" in s_api:
+                site["api"] = "csp_PanWebShare"
+                # 物理剥离上游可能残留的外部 jar 依赖包，回归纯正内置协议
+                if "jar" in site:
+                    site.pop("jar")
+
+            # 🛠️ 3. 瓜子靶向保护：防误伤，强力摘出
             is_guazi = "瓜子" in raw_name or "GZ" == s_key
 
-            # 🛠️ 3. 精准捕获福利关键字（排除瓜子后）
+            # 🛠️ 4. 精准捕获福利关键字（排除瓜子后）
             is_nsfw = False if is_guazi else ("🔞" in raw_name or "色播" in raw_name or "av" in s_key.lower() or "瓜" in raw_name or "爆料" in raw_name or "chat" in raw_name.lower() or "cam" in raw_name.lower() or "panda" in raw_name.lower() or "video" in raw_name.lower() or "md" in s_key.lower())
 
-            # 🛠️ 4. 彻底重构的九大阵营匹配逻辑
+            # 🛠️ 5. 彻底重构的九大阵营匹配逻辑
             if "豆瓣" in raw_name and "首页" in raw_name:
                 site["name"] = "豆瓣 • 首页｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜@huliys9"
                 site["category"] = "综合"
@@ -310,7 +318,7 @@ try:
                 block_9_fuli.append(site)
                 
             elif "短剧" in raw_name or "剧场" in raw_name:
-                # 🛠️ 修正：包含 DJ/dj 关键词的线一律强行分流进入音乐阵营
+                # 🛠️ 包含 DJ/dj 关键词的线一律强行分流进入音乐阵营
                 if "dj" in raw_name.lower() or "dj" in s_key.lower():
                     if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                     site["name"] = raw_name
@@ -330,17 +338,15 @@ try:
                 site["category"] = "动漫"
                 block_4_dongman.append(site)
                 
-            elif "磁力" in raw_name or "索" in raw_name or "盘" in raw_name or "云盘" in raw_name or "4k" in raw_name.lower():
+            elif "磁力" in raw_name or "索" in raw_name or "盘" in raw_name or "云盘" in raw_name or "4k" in raw_name.lower() or "PanWebShare" in str(s_api):
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 site["category"] = "网盘/磁力"
                 
-                # 🎯【核心黑科技大招】彻底关闭网盘/磁力线的全网被动检索，完全隔绝历史缓存锁定造成的解析报错
+                # 保持网盘磁力静默不参与被动聚合搜索，并赋予换源开关
                 site["searchable"] = 0
                 site["quickSearch"] = 0
-                
-                if "PanWebShare" in site.get("api", ""):
-                    site["changeable"] = 1
+                site["changeable"] = 1
                 block_5_cili.append(site)
                 
             elif "体育" in raw_name or "球" in raw_name or "直播" in raw_name:
@@ -373,16 +379,16 @@ try:
                 site["category"] = "综合"
                 block_2_yingshi.append(site)
 
-            # 🛠️ 5. 补齐非音乐少儿类的全局搜索功能开关
+            # 🛠️ 补齐非音乐少儿类的全局搜索功能开关
             if site.get("category") not in ["少儿", "音乐"] and "searchable" not in site:
                 site["searchable"] = 1
 
-        # 🛠️ 6. 爱奇艺名称调正，去掉冗长致谢词，强制换上统一的官方TG后缀
+        # 🛠️ 爱奇艺名称最终清洗纠正
         for site in block_2_yingshi:
             if site.get("key") == "AQY":
                 site["name"] = "🦋 爱奇艺 ｜Tg：@huliys9"
 
-        # 👑 【核心硬组装】全量降权并封锁网盘搜索，单线路优先级完美登顶
+        # 👑 【全员强重组】网盘全量降权沉底，单线路检索优先级完美封顶
         ordered_obj["sites"] = (
             block_1_douban + 
             block_2_yingshi + 
@@ -394,7 +400,7 @@ try:
             block_5_cili + 
             block_9_fuli
         )
-        print(f"🚀 【洗牌结算】全量合并站点重组完成！网盘搜索权限已全面锁定并执行降权排位，影视单线解析成功登顶！")
+        print(f"🚀 【洗牌结算】全量合并版终极洗牌完成！网盘依赖已彻底洗白，完美对齐未配Token隐藏机制！")
 
     except Exception as inner_e:
         print(f"⚠️ 提示：美化与智能重排阶段跳过，原因: {inner_e}")
