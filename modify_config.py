@@ -99,9 +99,9 @@ def load_json_safe(path):
             print(f"❌ 错误：{path} JSON 格式不正确！无法解析。")
             return {}
 
+json_cnb = load_json_safe(cnb_path)
 json_haitun = load_json_safe(haitun_path)
 json_lz = load_json_safe(lz_path)
-json_cnb = load_json_safe(cnb_path)
 
 haitun_sites = json_haitun.get("sites", [])
 haitun_lives = json_haitun.get("lives", [])
@@ -254,12 +254,12 @@ try:
                     clean_lives.append(live)
             ordered_obj["lives"] = clean_lives
 
-        # --- 5 & 6. 🏆【核心重写：九大方阵智能归类洗牌 与 热播APP硬核置顶注入致谢算法】 ---
-        block_1_rebo = []         # 1. 🏆 热播APP专属置顶方阵
+        # --- 5 & 6. 🏆【核心重写：九大方阵智能归类洗牌 与 热播影视精准置顶长鸣谢算法】 ---
+        block_1_rebo = []         # 1. 🏆 热播影视专属置顶方阵 (仅限 key: 热播影视)
         block_2_yingshi = []      # 2. 影视/追剧/APP大类
         block_3_duanju = []       # 3. 短剧/剧场
         block_4_dongman = []      # 4. 动漫类
-        block_5_cili = []         # 5. 网盘/磁力/4K (未配Token不加载机制)
+        block_5_cili = []         # 5. 网盘/磁力/4K (未配Token不加载特性)
         block_6_tiyu = []         # 6. 体育/看球/直播
         block_7_shaoer = []       # 7. 少儿课堂/教育
         block_8_yinyue = []       # 8. 音乐/听书/功能线/DJ
@@ -291,7 +291,7 @@ try:
             if "ext" in site and site["ext"] == {}:
                 site["ext"] = ""
 
-            # 🛠️ 2. 【核心大招】网盘组件强行去后缀洗白！对齐成功配置，实现未配Token不展示网盘的特性
+            # 🛠️ 2. 【核心大招】网盘组件强行去后缀洗白！实现未配Token不展示网盘的特性
             if isinstance(s_api, str) and "PanWebShare" in s_api:
                 site["api"] = "csp_PanWebShare"
                 if "jar" in site:
@@ -303,18 +303,18 @@ try:
             # 🛠️ 4. 精准捕获福利关键字（排除瓜子后）
             is_nsfw = False if is_guazi else ("🔞" in raw_name or "色播" in raw_name or "av" in s_key.lower() or "瓜" in raw_name or "爆料" in raw_name or "chat" in raw_name.lower() or "cam" in raw_name.lower() or "panda" in raw_name.lower() or "video" in raw_name.lower() or "md" in s_key.lower())
 
-            # 🛠️ 5. 【靶向劫持】判定是不是核心目标“热播影视/热播APP”
-            is_target_rebo = "热播" in raw_name and ("影视" in raw_name or "app" in raw_name.lower() or "影视" in s_key or "热播影视" in s_key)
+            # 🛠️ 5. 【靶向精准连坐解除】唯一锁定主线 "key": "热播影视"
+            is_target_rebo_main = (s_key == "热播影视")
 
             # 🛠️ 6. 彻底完成洗牌分流与名字特调
-            if is_target_rebo:
-                # 🎯 热播APP特调：剥离原有标签，强制追加致谢声明长尾巴，推入置顶 block_1
+            if is_target_rebo_main:
+                # 🎯 唯独将“热播影视”注入大长鸣谢声明，推入置顶第一位 block_1[cite: 7]
                 site["name"] = "热播 • APP｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜@huliys9"
                 site["category"] = "综合"
                 block_1_rebo.append(site)
 
             elif "豆瓣" in raw_name and "首页" in raw_name:
-                # 🎯 豆瓣解绑：恢复其原本清净名，退回普通影视区 block_2
+                # 豆瓣解绑：恢复其原本清净名，退回普通影视区 block_2[cite: 7]
                 site["name"] = "🦋 豆瓣 • 首页"
                 site["category"] = "综合"
                 site["searchable"] = 0
@@ -327,6 +327,7 @@ try:
                 block_9_fuli.append(site)
                 
             elif "短剧" in raw_name or "剧场" in raw_name:
+                # 包含 DJ/dj 关键词的线一律强行分流进入音乐阵营[cite: 7]
                 if "dj" in raw_name.lower() or "dj" in s_key.lower():
                     if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                     site["name"] = raw_name
@@ -346,15 +347,12 @@ try:
                 site["category"] = "动漫"
                 block_4_dongman.append(site)
                 
-            elif "磁力" in raw_name or "索" in raw_name or "盘" in raw_name or "云盘" in raw_name or "4k" in raw_name.lower() or "PanWebShare" in str(s_api):
+            elif "磁力" in raw_name or "索" in raw_name or "盘" in raw_name or "云盘" in raw_name or "4k" in raw_name.lower():
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 site["category"] = "网盘/磁力"
-                
-                # 保持网盘磁力静默不参与被动聚合搜索，完全隔离二次点击缓存
-                site["searchable"] = 0
-                site["quickSearch"] = 0
-                site["changeable"] = 1
+                if "PanWebShare" in site.get("api", ""):
+                    site["changeable"] = 1
                 block_5_cili.append(site)
                 
             elif "体育" in raw_name or "球" in raw_name or "直播" in raw_name:
@@ -381,7 +379,7 @@ try:
                 block_8_yinyue.append(site)
                 
             else:
-                # 默认影视大类（包含名称带瓜子APP、视频、影院、追剧等）
+                # 默认影视大类（包含名称带瓜子APP、视频、以及保留原地归类的 "key": "rb" 线路）[cite: 7]
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 site["category"] = "综合"
@@ -396,19 +394,19 @@ try:
             if site.get("key") == "AQY":
                 site["name"] = "🦋 爱奇艺 ｜Tg：@huliys9"
 
-        # 👑 【新首页硬组装】热播APP携长致谢完美置顶（Index 0），网盘磁力继续全员降权并切断被动检索
+        # 👑 【新首页硬组装】"key": "热播影视" 携长致谢完美置顶（Index 0），另一个热播"key": "rb"正常随大部队在影视区排列[cite: 7]
         ordered_obj["sites"] = (
-            block_1_rebo +         # 1. 🎯 热播APP置顶 (0号位海报墙扛把子)
-            block_2_yingshi +      # 2. 传统综合影视单线路 (包含回归的豆瓣首页)
-            block_3_duanju +       # 3. 独立短剧
-            block_4_dongman +      # 4. 动漫新番
-            block_6_tiyu +         # 5. 体育直播
-            block_7_shaoer +       # 6. 少儿课堂
-            block_8_yinyue +       # 7. 音乐/听书/功能辅助线
-            block_5_cili +         # 8. 网盘/磁力/4K降权区
-            block_9_fuli           # 9. 福利18禁安全坠尾
+            block_1_rebo +         # 1. 🎯 "key": "热播影视" 绝对置顶 (0号位海报墙扛把子)[cite: 7]
+            block_2_yingshi +      # 2. 传统综合影视单线路 (包含回归的豆瓣首页和原本就在此的 key: rb 线路)[cite: 7]
+            block_3_duanju +       # 3. 独立短剧[cite: 7]
+            block_4_dongman +      # 4. 动漫新番[cite: 7]
+            block_6_tiyu +         # 5. 体育直播[cite: 7]
+            block_7_shaoer +       # 6. 少儿课堂[cite: 7]
+            block_8_yinyue +       # 7. 音乐/听书/功能辅助线[cite: 7]
+            block_5_cili +         # 8. 网盘/磁力/4K降权区[cite: 7]
+            block_9_fuli           # 9. 福利18禁安全坠尾[cite: 7]
         )
-        print(f"🚀 【洗牌结算】新架构装配成功！热播APP成功置顶并注入长致谢，网盘降权屏蔽，豆瓣安全归队！")
+        print(f"🚀 【洗牌结算】靶向隔离重排成功！\"key\": \"热播影视\" 已锁定置顶，\"key\": \"rb\" 线路已安稳保留在其原有的影视分类位置。")
 
     except Exception as inner_e:
         print(f"⚠️ 提示：美化与智能重排阶段跳过，原因: {inner_e}")
