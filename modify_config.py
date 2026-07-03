@@ -99,9 +99,9 @@ def load_json_safe(path):
             print(f"❌ 错误：{path} JSON 格式不正确！无法解析。")
             return {}
 
-json_cnb = load_json_safe(cnb_path)
 json_haitun = load_json_safe(haitun_path)
 json_lz = load_json_safe(lz_path)
+json_cnb = load_json_safe(cnb_path)
 
 haitun_sites = json_haitun.get("sites", [])
 haitun_lives = json_haitun.get("lives", [])
@@ -254,16 +254,16 @@ try:
                     clean_lives.append(live)
             ordered_obj["lives"] = clean_lives
 
-        # --- 5 & 6. 🏆【核心重写：单线清洗、打标、九大方阵动态完美洗牌算法】 ---
-        block_1_douban = []       # 1. 豆瓣首页专享
+        # --- 5 & 6. 🏆【核心重写：九大方阵智能归类洗牌 与 热播APP硬核置顶注入致谢算法】 ---
+        block_1_rebo = []         # 1. 🏆 热播APP专属置顶方阵
         block_2_yingshi = []      # 2. 影视/追剧/APP大类
         block_3_duanju = []       # 3. 短剧/剧场
         block_4_dongman = []      # 4. 动漫类
-        block_5_cili = []         # 5. 网盘/磁力/4K
+        block_5_cili = []         # 5. 网盘/磁力/4K (未配Token不加载机制)
         block_6_tiyu = []         # 6. 体育/看球/直播
         block_7_shaoer = []       # 7. 少儿课堂/教育
         block_8_yinyue = []       # 8. 音乐/听书/功能线/DJ
-        block_9_fuli = []         # 9. 福利/18禁 (绝对垫底)
+        block_9_fuli = []         # 9. 福利/18禁 (绝对大沉底)
 
         tg_tail_count = 0  
 
@@ -274,6 +274,7 @@ try:
             raw_name = site["name"]
             s_key = site.get("key", "")
             s_genre = site.get("genre", "")
+            s_api = site.get("api", "")
 
             # 🛠️ 1. 清洗名称里的脏字符
             for char in ['丨', '┃', ' ']:
@@ -290,19 +291,35 @@ try:
             if "ext" in site and site["ext"] == {}:
                 site["ext"] = ""
 
-            # 🛠️ 2. 【核心修复】瓜子防御机制：如果包含"瓜子"，单独摘出，绝对不准连坐进入福利区
+            # 🛠️ 2. 【核心大招】网盘组件强行去后缀洗白！对齐成功配置，实现未配Token不展示网盘的特性
+            if isinstance(s_api, str) and "PanWebShare" in s_api:
+                site["api"] = "csp_PanWebShare"
+                if "jar" in site:
+                    site.pop("jar")
+
+            # 🛠️ 3. 瓜子靶向保护：防误伤，强力摘出
             is_guazi = "瓜子" in raw_name or "GZ" == s_key
 
-            # 🛠️ 3. 精准捕获福利关键字（排除瓜子后）
+            # 🛠️ 4. 精准捕获福利关键字（排除瓜子后）
             is_nsfw = False if is_guazi else ("🔞" in raw_name or "色播" in raw_name or "av" in s_key.lower() or "瓜" in raw_name or "爆料" in raw_name or "chat" in raw_name.lower() or "cam" in raw_name.lower() or "panda" in raw_name.lower() or "video" in raw_name.lower() or "md" in s_key.lower())
 
-            # 🛠️ 4. 彻底重构的九大阵营匹配逻辑
-            if "豆瓣" in raw_name and "首页" in raw_name:
-                site["name"] = "豆瓣 • 首页｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜@huliys9"
+            # 🛠️ 5. 【靶向劫持】判定是不是核心目标“热播影视/热播APP”
+            is_target_rebo = "热播" in raw_name and ("影视" in raw_name or "app" in raw_name.lower() or "影视" in s_key or "热播影视" in s_key)
+
+            # 🛠️ 6. 彻底完成洗牌分流与名字特调
+            if is_target_rebo:
+                # 🎯 热播APP特调：剥离原有标签，强制追加致谢声明长尾巴，推入置顶 block_1
+                site["name"] = "热播 • APP｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜@huliys9"
+                site["category"] = "综合"
+                block_1_rebo.append(site)
+
+            elif "豆瓣" in raw_name and "首页" in raw_name:
+                # 🎯 豆瓣解绑：恢复其原本清净名，退回普通影视区 block_2
+                site["name"] = "🦋 豆瓣 • 首页"
                 site["category"] = "综合"
                 site["searchable"] = 0
-                block_1_douban.append(site)
-                
+                block_2_yingshi.append(site)
+
             elif is_nsfw:
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
@@ -310,7 +327,6 @@ try:
                 block_9_fuli.append(site)
                 
             elif "短剧" in raw_name or "剧场" in raw_name:
-                # 🛠️ 核心修复：DJ不再进短剧，这里排除带DJ或dj的词
                 if "dj" in raw_name.lower() or "dj" in s_key.lower():
                     if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                     site["name"] = raw_name
@@ -330,12 +346,15 @@ try:
                 site["category"] = "动漫"
                 block_4_dongman.append(site)
                 
-            elif "磁力" in raw_name or "索" in raw_name or "盘" in raw_name or "云盘" in raw_name or "4k" in raw_name.lower():
+            elif "磁力" in raw_name or "索" in raw_name or "盘" in raw_name or "云盘" in raw_name or "4k" in raw_name.lower() or "PanWebShare" in str(s_api):
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 site["category"] = "网盘/磁力"
-                if "PanWebShare" in site.get("api", ""):
-                    site["changeable"] = 1
+                
+                # 保持网盘磁力静默不参与被动聚合搜索，完全隔离二次点击缓存
+                site["searchable"] = 0
+                site["quickSearch"] = 0
+                site["changeable"] = 1
                 block_5_cili.append(site)
                 
             elif "体育" in raw_name or "球" in raw_name or "直播" in raw_name:
@@ -352,7 +371,6 @@ try:
                 block_7_shaoer.append(site)
                 
             elif "音乐" in raw_name or "网易云" in raw_name or "听书" in raw_name or "唱会" in raw_name or "fm" in raw_name.lower() or "相声" in raw_name or "小品" in raw_name or "戏曲" in raw_name or "推送" in raw_name or "配置" in raw_name or "版本" in raw_name or "本地" in raw_name or "dj" in raw_name.lower() or "dj" in s_key.lower():
-                # 🛠️ 核心修复：音乐和所有DJ线路无缝收录在此，统一赋予音乐属性
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 if "音乐" in raw_name or "网易云" in raw_name or "听书" in raw_name or "fm" in raw_name.lower() or "dj" in raw_name.lower() or "dj" in s_key.lower():
@@ -363,24 +381,34 @@ try:
                 block_8_yinyue.append(site)
                 
             else:
-                # 默认影视大类（包含名称带瓜子APP、视频、影院、追剧的全部普适专线）
+                # 默认影视大类（包含名称带瓜子APP、视频、影院、追剧等）
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 site["category"] = "综合"
                 block_2_yingshi.append(site)
 
-            # 🛠️ 5. 补齐非音乐少儿类的全局搜索功能开关
+            # 🛠️ 7. 补齐非音乐少儿类的全局搜索功能开关
             if site.get("category") not in ["少儿", "音乐"] and "searchable" not in site:
                 site["searchable"] = 1
 
-        # 🛠️ 6. 【核心修复】爱奇艺名称鸣谢清空，强制对齐优酷腾讯，直接换上TG频道后缀
+        # 🛠️ 8. 爱奇艺官方名称规格对齐
         for site in block_2_yingshi:
             if site.get("key") == "AQY":
                 site["name"] = "🦋 爱奇艺 ｜Tg：@huliys9"
 
-        # 👑 【核心硬组装】彻底完成洗牌落盘
-        ordered_obj["sites"] = block_1_douban + block_2_yingshi + block_3_duanju + block_4_dongman + block_5_cili + block_6_tiyu + block_7_shaoer + block_8_yinyue + block_9_fuli
-        print(f"🚀 【洗牌结算】全量合并站点重组完成！爱奇艺修正成功，瓜子阵营及DJ/音乐板块已全部纠正到位。")
+        # 👑 【新首页硬组装】热播APP携长致谢完美置顶（Index 0），网盘磁力继续全员降权并切断被动检索
+        ordered_obj["sites"] = (
+            block_1_rebo +         # 1. 🎯 热播APP置顶 (0号位海报墙扛把子)
+            block_2_yingshi +      # 2. 传统综合影视单线路 (包含回归的豆瓣首页)
+            block_3_duanju +       # 3. 独立短剧
+            block_4_dongman +      # 4. 动漫新番
+            block_6_tiyu +         # 5. 体育直播
+            block_7_shaoer +       # 6. 少儿课堂
+            block_8_yinyue +       # 7. 音乐/听书/功能辅助线
+            block_5_cili +         # 8. 网盘/磁力/4K降权区
+            block_9_fuli           # 9. 福利18禁安全坠尾
+        )
+        print(f"🚀 【洗牌结算】新架构装配成功！热播APP成功置顶并注入长致谢，网盘降权屏蔽，豆瓣安全归队！")
 
     except Exception as inner_e:
         print(f"⚠️ 提示：美化与智能重排阶段跳过，原因: {inner_e}")
