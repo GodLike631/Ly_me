@@ -10,8 +10,7 @@
             "type": 3,
             "api": "csp_Douban",
             "searchable": 0,
-            "category": "综合",
-            "parse": 1
+            "category": "综合"
         },
         {
             "key": "AQY",
@@ -1677,10 +1676,11 @@
             "name": "🦋 腾讯4K｜Tg：@huliys9",
             "type": 3,
             "api": "https://ghfast.top/https://raw.githubusercontent.com/IY-CPU/IY/main/lib/drpy2.min.js",
-            "searchable": 1,
+            "searchable": 0,
             "changeable": 1,
             "ext": "https://fastlink.cokey.xyz/f/1MOEc5/%E8%85%BE%E8%85%BE.js",
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "quickSearch": 0
         },
         {
             "key": "芒芒",
@@ -1689,15 +1689,16 @@
             "api": "https://ghfast.top/https://raw.githubusercontent.com/IY-CPU/IY/main/lib/drpy2.min.js",
             "ext": "https://ghfast.top/https://raw.githubusercontent.com/IY-CPU/IY/main/lib/茫茫.png",
             "category": "网盘/磁力",
-            "searchable": 1
+            "searchable": 0,
+            "quickSearch": 0
         },
         {
             "key": "玩偶",
             "name": "🦋 玩偶 • 4K",
             "type": 3,
             "api": "csp_Wogg",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "changeable": 1,
             "ext": {
@@ -1715,8 +1716,8 @@
             "name": "🦋 快映 • 4K",
             "type": 3,
             "api": "csp_PanWebShare",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "changeable": 1,
             "ext": {
@@ -1732,8 +1733,8 @@
             "name": "🦋 木偶 • 4K",
             "type": 3,
             "api": "csp_PanWebShare",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "changeable": 1,
             "ext": {
@@ -1752,8 +1753,8 @@
             "name": "🦋 蜡笔 • 4K",
             "type": 3,
             "api": "csp_PanWebShare",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "changeable": 1,
             "ext": {
@@ -1772,8 +1773,8 @@
             "name": "🦋 至臻 • 4K",
             "type": 3,
             "api": "csp_PanWebShare",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "changeable": 1,
             "ext": {
@@ -1791,8 +1792,8 @@
             "name": "🦋 多多 • 4K",
             "type": 3,
             "api": "csp_PanWebShare",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "changeable": 1,
             "ext": {
@@ -1810,8 +1811,8 @@
             "name": "🦋 欧哥 • 4K",
             "type": 3,
             "api": "csp_PanWebShare",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "changeable": 1,
             "ext": {
@@ -1830,8 +1831,8 @@
             "name": "🦋 二小 • 4K",
             "type": 3,
             "api": "csp_PanWebShare",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "changeable": 1,
             "ext": {
@@ -1849,8 +1850,8 @@
             "name": "🦋 虎斑 • 4K",
             "type": 3,
             "api": "csp_PanWebShare",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "changeable": 1,
             "ext": {
@@ -1866,7 +1867,7 @@
             "name": "🦋 夸父 • 4K",
             "type": 3,
             "api": "csp_PanWebShareKF",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "style": {
@@ -1888,7 +1889,7 @@
             "name": "🦋 盘它 • 4K",
             "type": 3,
             "api": "csp_PanWebSharePT",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "style": {
@@ -1903,7 +1904,7 @@
             "name": "🦋 123 • 4K",
             "type": 3,
             "api": "csp_PanWebShare123",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "style": {
@@ -1925,8 +1926,8 @@
             "name": "🦋 指南 • 4K",
             "type": 3,
             "api": "csp_4KZhinan",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "timeout": 60,
             "category": "网盘/磁力"
@@ -1936,8 +1937,8 @@
             "name": "🦋 人人 • 4K",
             "type": 3,
             "api": "csp_RenRen",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "timeout": 60,
             "category": "网盘/磁力"
@@ -1947,7 +1948,7 @@
             "name": "🦋 即刻 • 4K",
             "type": 3,
             "api": "csp_Jike",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "style": {
@@ -1961,7 +1962,7 @@
             "name": "🦋 双星 • 4K",
             "type": 3,
             "api": "csp_ShuangXing",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "style": {
@@ -1976,15 +1977,16 @@
             "api": "csp_JianPian",
             "type": 3,
             "category": "网盘/磁力",
-            "searchable": 1
+            "searchable": 0,
+            "quickSearch": 0
         },
         {
             "key": "七味",
             "name": "🦋 七味 • 磁力",
             "type": 3,
             "api": "csp_QnMp4",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "ext": "https://www.qwshow.com,https://www.qwmkv.com,https://www.qwfilm.com,https://www.qwfun.com,https://www.qnnull.com,https://www.qnnull.com",
             "category": "网盘/磁力"
@@ -1994,8 +1996,8 @@
             "name": "🦋 New6V • 磁力",
             "type": 3,
             "api": "csp_New6v",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "ext": "https://www.xb6v.com",
             "category": "网盘/磁力"
@@ -2005,8 +2007,8 @@
             "name": "🦋 美剧迷 • 磁力",
             "type": 3,
             "api": "csp_MeijuMi",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "category": "网盘/磁力"
         },
@@ -2015,8 +2017,8 @@
             "name": "🦋 迅雷吧 • 磁力",
             "type": 3,
             "api": "csp_Xunlei8",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "ext": "https://xunlei8.me",
             "category": "网盘/磁力"
@@ -2026,8 +2028,8 @@
             "name": "🦋 电影港 • 磁力",
             "type": 3,
             "api": "csp_XYQHiker",
-            "searchable": 1,
-            "quickSearch": 1,
+            "searchable": 0,
+            "quickSearch": 0,
             "filterable": 1,
             "ext": "https://cnb.cool/fish2018/xs/-/git/raw/main/XYQHiker/电影港.json",
             "category": "网盘/磁力"
@@ -2044,7 +2046,8 @@
                 "type": "list",
                 "ratio": 1.433
             },
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "quickSearch": 0
         },
         {
             "key": "夸克网盘",
@@ -2058,7 +2061,8 @@
                 "type": "list",
                 "ratio": 1.433
             },
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "quickSearch": 0
         },
         {
             "key": "UC网盘",
@@ -2072,7 +2076,8 @@
                 "type": "list",
                 "ratio": 1.433
             },
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "quickSearch": 0
         },
         {
             "key": "百度网盘",
@@ -2086,14 +2091,15 @@
                 "type": "list",
                 "ratio": 1.433
             },
-            "category": "网盘/磁力"
+            "category": "网盘/磁力",
+            "quickSearch": 0
         },
         {
             "key": "盘搜",
             "name": "🦋 盘搜 • 搜索",
             "type": 3,
             "api": "csp_PanSou",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
@@ -2104,7 +2110,7 @@
             "name": "🦋 古哥 • 搜索",
             "type": 3,
             "api": "csp_GugeSo",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
@@ -2115,7 +2121,7 @@
             "name": "🦋 百酷 • 搜索",
             "type": 3,
             "api": "csp_Baiku",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
@@ -2126,7 +2132,7 @@
             "name": "🦋 米搜 • 搜索",
             "type": 3,
             "api": "csp_MiSou",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
@@ -2137,7 +2143,7 @@
             "name": "🦋 鬼鬼 • 搜索",
             "type": 3,
             "api": "csp_GuiGui",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
@@ -2148,7 +2154,7 @@
             "name": "🦋 混合 • 搜索",
             "type": 3,
             "api": "csp_HunHePan",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
@@ -2159,7 +2165,7 @@
             "name": "🦋 天翼 • 搜索",
             "type": 3,
             "api": "csp_TianYiSou",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
@@ -2170,7 +2176,7 @@
             "name": "🦋 趣盘 • 搜索",
             "type": 3,
             "api": "csp_QuPanSo",
-            "searchable": 1,
+            "searchable": 0,
             "quickSearch": 0,
             "filterable": 0,
             "timeout": 60,
@@ -2281,6 +2287,14 @@
             "name": "🦋 91吃瓜中心.py｜🔞",
             "type": 3,
             "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/91吃瓜中心.py",
+            "category": "福利",
+            "searchable": 1
+        },
+        {
+            "key": "mrds",
+            "name": "🦋 每日大赛.py｜🔞",
+            "type": 3,
+            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/每日大赛.py",
             "category": "福利",
             "searchable": 1
         },
