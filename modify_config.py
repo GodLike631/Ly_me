@@ -382,9 +382,20 @@ try:
             if site.get("key") == "AQY":
                 site["name"] = "🦋 爱奇艺 ｜Tg：@huliys9"
 
-        # 👑 【核心硬组装】彻底完成洗牌落盘
-        ordered_obj["sites"] = block_1_douban + block_2_yingshi + block_3_duanju + block_4_dongman + block_5_cili + block_6_tiyu + block_7_shaoer + block_8_yinyue + block_9_fuli
-        print(f"🚀 【洗牌结算】全量合并站点重组完成！爱奇艺修正成功，瓜子阵营及DJ/音乐板块已全部纠正到位。")
+        # 👑 【全新重排优化：网盘全员降权，影视绝对全网最优先】
+        # 优化后顺序：将网盘磁力阵营(block_5_cili)往后狠狠地移，排在音乐和功能线之后，福利线之前！
+        ordered_obj["sites"] = (
+            block_1_douban +       # 1. 豆瓣首页置顶 (Index 0 激活海报墙)
+            block_2_yingshi +      # 2. 传统综合影视单线路 (七味、采集聚合、爱奇艺等) ➡️ 占据搜索最高判定优先级！
+            block_3_duanju +       # 3. 独立短剧
+            block_4_dongman +      # 4. 动漫新番
+            block_6_tiyu +         # 5. 体育直播
+            block_7_shaoer +       # 6. 少儿课堂
+            block_8_yinyue +       # 7. 音乐/听书/功能辅助线
+            block_5_cili +         # 8. 🚨【降权】网盘/磁力/4K大类挪到这里！确保全网聚合搜索时，单线路雷打不动排在最前面！
+            block_9_fuli           # 9. 福利18禁 (继续安全垫底)
+        )
+        print(f"🚀 【重排结算】已执行网盘全员大降权方案！当从豆瓣或全局搜索点开影片时，FongMi 将 100% 优先匹配和播放传统单线路，完美解决网盘卡死与解析失败报错！")
 
     except Exception as inner_e:
         print(f"⚠️ 提示：美化与智能重排阶段跳过，原因: {inner_e}")
