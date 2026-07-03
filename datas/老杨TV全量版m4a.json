@@ -1240,6 +1240,438 @@
             "searchable": 1
         },
         {
+            "key": "kf",
+            "name": "🦋 咖啡体育直播.py",
+            "type": 3,
+            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/咖啡直播.py",
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "sm",
+            "name": "🦋 韩国熊猫直播",
+            "type": 3,
+            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/熊猫直播.py",
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "blzb",
+            "name": "🦋 哔哩直播.py",
+            "type": 3,
+            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/哔哩直播.py",
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "jhzb",
+            "name": "🦋 聚合直播.py",
+            "type": 3,
+            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/聚合直播.py",
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "88看球",
+            "name": "🦋 88 • 看球",
+            "type": 3,
+            "api": "csp_Kanqiu",
+            "gridview": 3,
+            "style": {
+                "type": "list"
+            },
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "球通体育",
+            "name": "🦋 球通 • 体育",
+            "type": 3,
+            "api": "csp_QiutongTY",
+            "style": {
+                "type": "list"
+            },
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "瓜子体育",
+            "name": "🦋 瓜子 • 体育",
+            "type": 3,
+            "api": "csp_GuaziTY",
+            "style": {
+                "type": "list"
+            },
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "咖啡体育",
+            "name": "🦋 咖啡 • 体育",
+            "type": 3,
+            "api": "csp_KafeiTY",
+            "style": {
+                "type": "list"
+            },
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "919体育",
+            "name": "🦋 919 • 体育",
+            "type": 3,
+            "api": "csp_919TY",
+            "style": {
+                "type": "list"
+            },
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "网络直播",
+            "name": "🦋 网络 • 直播",
+            "type": 3,
+            "api": "https://cnb.cool/fish2018/xs/-/git/raw/main/py/网络直播.py",
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "哔哩直播",
+            "name": "🦋 哔哩 • 直播",
+            "type": 3,
+            "api": "https://cnb.cool/fish2018/xs/-/git/raw/main/py/哔哩直播.py",
+            "category": "体育/直播",
+            "searchable": 1
+        },
+        {
+            "key": "少儿教育",
+            "name": "🦋 少儿 • 教育",
+            "type": 3,
+            "api": "csp_Bili",
+            "searchable": 0,
+            "quickSearch": 0,
+            "filterable": 1,
+            "ext": {
+                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/少儿教育.json",
+                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.597
+            },
+            "category": "少儿"
+        },
+        {
+            "key": "小学课堂",
+            "name": "🦋 小学 • 课堂",
+            "type": 3,
+            "api": "csp_Bili",
+            "searchable": 0,
+            "quickSearch": 0,
+            "filterable": 1,
+            "ext": {
+                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/小学课堂.json",
+                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.597
+            },
+            "category": "少儿"
+        },
+        {
+            "key": "初中课堂",
+            "name": "🦋 初中 • 课堂",
+            "type": 3,
+            "api": "csp_Bili",
+            "searchable": 0,
+            "quickSearch": 0,
+            "filterable": 1,
+            "ext": {
+                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/初中课堂.json",
+                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.597
+            },
+            "category": "少儿"
+        },
+        {
+            "key": "高中课堂",
+            "name": "🦋 高中 • 课堂",
+            "type": 3,
+            "api": "csp_Bili",
+            "searchable": 0,
+            "quickSearch": 0,
+            "filterable": 1,
+            "ext": {
+                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/高中课堂.json",
+                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.597
+            },
+            "category": "少儿"
+        },
+        {
+            "key": "急救教学",
+            "name": "🦋 急救 • 教学",
+            "type": 3,
+            "api": "csp_FirstAid",
+            "searchable": 0,
+            "quickSearch": 0,
+            "changeable": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 3.8
+            },
+            "gridview": "0-0-4.1",
+            "category": "少儿"
+        },
+        {
+            "key": "hgdj",
+            "name": "🦋 红果短剧.py",
+            "type": 3,
+            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/红果短剧.py",
+            "category": "音乐",
+            "searchable": 0
+        },
+        {
+            "key": "网易云音乐",
+            "name": "🦋 网易云[音乐]",
+            "type": 3,
+            "api": "https://xn--fjq53n.xyz/Ting/yinyue/网易云音乐.py",
+            "category": "音乐",
+            "searchable": 0
+        },
+        {
+            "key": "网易云音乐1",
+            "name": "🦋 网易云1[音乐]",
+            "type": 3,
+            "api": "https://xn--fjq53n.xyz/Ting/yinyue/网易云音乐1.py",
+            "category": "音乐",
+            "searchable": 0
+        },
+        {
+            "key": "捡的音乐",
+            "name": "🦋 爱听音乐[音乐]",
+            "type": 3,
+            "api": "csp_Music1",
+            "searchable": 0,
+            "quickSearch": 1,
+            "ext": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/jar_js/Music1.json",
+            "jar": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/jar_js/so.jar",
+            "filterable": 1,
+            "category": "音乐"
+        },
+        {
+            "key": "配置中心",
+            "name": "🦋 配置 • 中心",
+            "type": 3,
+            "api": "csp_Config",
+            "searchable": 0,
+            "changeable": 0,
+            "indexs": 0,
+            "style": {
+                "type": "rect",
+                "ratio": 1.597
+            },
+            "category": "综合"
+        },
+        {
+            "key": "Nostr2",
+            "name": "🦋 版本202606291609",
+            "type": 3,
+            "api": "csp_Nostr",
+            "homePage": "https://cnb.cool/fish2018/lib/-/git/raw/main/test.min.html",
+            "category": "综合",
+            "searchable": 0
+        },
+        {
+            "key": "本地",
+            "name": "🦋 本地 • 视频",
+            "type": 3,
+            "api": "csp_LocalFile",
+            "category": "综合",
+            "searchable": 0
+        },
+        {
+            "key": "呦呦DJ",
+            "name": "🦋 呦呦 • DJ",
+            "type": 3,
+            "api": "csp_Djuu",
+            "style": {
+                "type": "list"
+            },
+            "category": "音乐",
+            "searchable": 0
+        },
+        {
+            "key": "轮回DJ",
+            "name": "🦋 轮回 • DJ",
+            "type": 3,
+            "api": "csp_Djlh",
+            "style": {
+                "type": "list"
+            },
+            "category": "音乐",
+            "searchable": 0
+        },
+        {
+            "key": "蜻蜓FM",
+            "name": "🦋 蜻蜓 • FM",
+            "type": 3,
+            "api": "csp_QingtingFM",
+            "style": {
+                "type": "list"
+            },
+            "category": "音乐",
+            "searchable": 0
+        },
+        {
+            "key": "世界听书",
+            "name": "🦋 世界 • 听书",
+            "type": 3,
+            "api": "csp_TingShijie",
+            "style": {
+                "type": "list"
+            },
+            "category": "音乐",
+            "searchable": 0
+        },
+        {
+            "key": "戏曲多多",
+            "name": "🦋 戏曲 • 多多",
+            "type": 3,
+            "api": "csp_AppLY",
+            "style": {
+                "type": "list"
+            },
+            "category": "综合",
+            "searchable": 0
+        },
+        {
+            "key": "爱听音乐",
+            "name": "🦋 爱听 • 音乐",
+            "type": 3,
+            "api": "https://cnb.cool/fish2018/xs/-/git/raw/main/py/爱听音乐.py",
+            "category": "音乐",
+            "searchable": 0
+        },
+        {
+            "key": "哔哩哔哩演唱会",
+            "name": "🦋 哔哩 • 音乐",
+            "type": 3,
+            "api": "csp_Bili",
+            "searchable": 0,
+            "quickSearch": 0,
+            "filterable": 0,
+            "ext": {
+                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/哔哩哔哩演唱会.json",
+                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.597
+            },
+            "category": "音乐"
+        },
+        {
+            "key": "哔哩哔哩听书",
+            "name": "🦋 哔哩 • 听书",
+            "type": 3,
+            "api": "csp_Bili",
+            "searchable": 0,
+            "quickSearch": 0,
+            "filterable": 0,
+            "ext": {
+                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/哔哩哔哩听书.json",
+                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.597
+            },
+            "category": "音乐"
+        },
+        {
+            "key": "哔哩哔哩相声",
+            "name": "🦋 哔哩 • 相声",
+            "type": 3,
+            "api": "csp_Bili",
+            "searchable": 0,
+            "quickSearch": 0,
+            "filterable": 0,
+            "ext": {
+                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/哔哩哔哩相声.json",
+                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.597
+            },
+            "category": "综合"
+        },
+        {
+            "key": "哔哩哔哩小品",
+            "name": "🦋 哔哩 • 小品",
+            "type": 3,
+            "api": "csp_Bili",
+            "searchable": 0,
+            "quickSearch": 0,
+            "filterable": 0,
+            "ext": {
+                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/哔哩哔哩小品.json",
+                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.597
+            },
+            "category": "综合"
+        },
+        {
+            "key": "哔哩哔哩戏曲",
+            "name": "🦋 哔哩 • 戏曲",
+            "type": 3,
+            "api": "csp_Bili",
+            "searchable": 0,
+            "quickSearch": 0,
+            "filterable": 0,
+            "ext": {
+                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/哔哩哔哩戏曲.json",
+                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
+            },
+            "style": {
+                "type": "rect",
+                "ratio": 1.597
+            },
+            "category": "综合"
+        },
+        {
+            "key": "版本信息",
+            "name": "🦋 版本 • 信息",
+            "type": 3,
+            "api": "csp_Market",
+            "searchable": 0,
+            "changeable": 0,
+            "indexs": 0,
+            "ext": "https://pizazz.s3.bitiful.net/single.json",
+            "category": "综合"
+        },
+        {
+            "key": "push_agent",
+            "name": "🦋 手机 • 推送",
+            "type": 3,
+            "api": "csp_Push",
+            "searchable": 0,
+            "filterable": 0,
+            "changeable": 0,
+            "category": "综合"
+        },
+        {
             "spider": "./tvbox.jar",
             "key": "hajim-腾讯备",
             "name": "🦋 腾讯4K｜Tg：@huliys9",
@@ -1743,438 +2175,6 @@
             "filterable": 0,
             "timeout": 60,
             "category": "网盘/磁力"
-        },
-        {
-            "key": "kf",
-            "name": "🦋 咖啡体育直播.py",
-            "type": 3,
-            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/咖啡直播.py",
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "sm",
-            "name": "🦋 韩国熊猫直播",
-            "type": 3,
-            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/熊猫直播.py",
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "blzb",
-            "name": "🦋 哔哩直播.py",
-            "type": 3,
-            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/哔哩直播.py",
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "jhzb",
-            "name": "🦋 聚合直播.py",
-            "type": 3,
-            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/聚合直播.py",
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "88看球",
-            "name": "🦋 88 • 看球",
-            "type": 3,
-            "api": "csp_Kanqiu",
-            "gridview": 3,
-            "style": {
-                "type": "list"
-            },
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "球通体育",
-            "name": "🦋 球通 • 体育",
-            "type": 3,
-            "api": "csp_QiutongTY",
-            "style": {
-                "type": "list"
-            },
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "瓜子体育",
-            "name": "🦋 瓜子 • 体育",
-            "type": 3,
-            "api": "csp_GuaziTY",
-            "style": {
-                "type": "list"
-            },
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "咖啡体育",
-            "name": "🦋 咖啡 • 体育",
-            "type": 3,
-            "api": "csp_KafeiTY",
-            "style": {
-                "type": "list"
-            },
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "919体育",
-            "name": "🦋 919 • 体育",
-            "type": 3,
-            "api": "csp_919TY",
-            "style": {
-                "type": "list"
-            },
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "网络直播",
-            "name": "🦋 网络 • 直播",
-            "type": 3,
-            "api": "https://cnb.cool/fish2018/xs/-/git/raw/main/py/网络直播.py",
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "哔哩直播",
-            "name": "🦋 哔哩 • 直播",
-            "type": 3,
-            "api": "https://cnb.cool/fish2018/xs/-/git/raw/main/py/哔哩直播.py",
-            "category": "体育/直播",
-            "searchable": 1
-        },
-        {
-            "key": "少儿教育",
-            "name": "🦋 少儿 • 教育",
-            "type": 3,
-            "api": "csp_Bili",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 1,
-            "ext": {
-                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/少儿教育.json",
-                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
-            },
-            "style": {
-                "type": "rect",
-                "ratio": 1.597
-            },
-            "category": "少儿"
-        },
-        {
-            "key": "小学课堂",
-            "name": "🦋 小学 • 课堂",
-            "type": 3,
-            "api": "csp_Bili",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 1,
-            "ext": {
-                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/小学课堂.json",
-                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
-            },
-            "style": {
-                "type": "rect",
-                "ratio": 1.597
-            },
-            "category": "少儿"
-        },
-        {
-            "key": "初中课堂",
-            "name": "🦋 初中 • 课堂",
-            "type": 3,
-            "api": "csp_Bili",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 1,
-            "ext": {
-                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/初中课堂.json",
-                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
-            },
-            "style": {
-                "type": "rect",
-                "ratio": 1.597
-            },
-            "category": "少儿"
-        },
-        {
-            "key": "高中课堂",
-            "name": "🦋 高中 • 课堂",
-            "type": 3,
-            "api": "csp_Bili",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 1,
-            "ext": {
-                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/高中课堂.json",
-                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
-            },
-            "style": {
-                "type": "rect",
-                "ratio": 1.597
-            },
-            "category": "少儿"
-        },
-        {
-            "key": "急救教学",
-            "name": "🦋 急救 • 教学",
-            "type": 3,
-            "api": "csp_FirstAid",
-            "searchable": 0,
-            "quickSearch": 0,
-            "changeable": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 3.8
-            },
-            "gridview": "0-0-4.1",
-            "category": "少儿"
-        },
-        {
-            "key": "hgdj",
-            "name": "🦋 红果短剧.py",
-            "type": 3,
-            "api": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/py/红果短剧.py",
-            "category": "音乐",
-            "searchable": 0
-        },
-        {
-            "key": "网易云音乐",
-            "name": "🦋 网易云[音乐]",
-            "type": 3,
-            "api": "https://xn--fjq53n.xyz/Ting/yinyue/网易云音乐.py",
-            "category": "音乐",
-            "searchable": 0
-        },
-        {
-            "key": "网易云音乐1",
-            "name": "🦋 网易云1[音乐]",
-            "type": 3,
-            "api": "https://xn--fjq53n.xyz/Ting/yinyue/网易云音乐1.py",
-            "category": "音乐",
-            "searchable": 0
-        },
-        {
-            "key": "捡的音乐",
-            "name": "🦋 爱听音乐[音乐]",
-            "type": 3,
-            "api": "csp_Music1",
-            "searchable": 0,
-            "quickSearch": 1,
-            "ext": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/jar_js/Music1.json",
-            "jar": "https://ghfast.top/https://raw.githubusercontent.com/FGBLH/GHK/refs/heads/main/jar_js/so.jar",
-            "filterable": 1,
-            "category": "音乐"
-        },
-        {
-            "key": "配置中心",
-            "name": "🦋 配置 • 中心",
-            "type": 3,
-            "api": "csp_Config",
-            "searchable": 0,
-            "changeable": 0,
-            "indexs": 0,
-            "style": {
-                "type": "rect",
-                "ratio": 1.597
-            },
-            "category": "综合"
-        },
-        {
-            "key": "Nostr2",
-            "name": "🦋 版本202606291609",
-            "type": 3,
-            "api": "csp_Nostr",
-            "homePage": "https://cnb.cool/fish2018/lib/-/git/raw/main/test.min.html",
-            "category": "综合",
-            "searchable": 0
-        },
-        {
-            "key": "本地",
-            "name": "🦋 本地 • 视频",
-            "type": 3,
-            "api": "csp_LocalFile",
-            "category": "综合",
-            "searchable": 0
-        },
-        {
-            "key": "呦呦DJ",
-            "name": "🦋 呦呦 • DJ",
-            "type": 3,
-            "api": "csp_Djuu",
-            "style": {
-                "type": "list"
-            },
-            "category": "音乐",
-            "searchable": 0
-        },
-        {
-            "key": "轮回DJ",
-            "name": "🦋 轮回 • DJ",
-            "type": 3,
-            "api": "csp_Djlh",
-            "style": {
-                "type": "list"
-            },
-            "category": "音乐",
-            "searchable": 0
-        },
-        {
-            "key": "蜻蜓FM",
-            "name": "🦋 蜻蜓 • FM",
-            "type": 3,
-            "api": "csp_QingtingFM",
-            "style": {
-                "type": "list"
-            },
-            "category": "音乐",
-            "searchable": 0
-        },
-        {
-            "key": "世界听书",
-            "name": "🦋 世界 • 听书",
-            "type": 3,
-            "api": "csp_TingShijie",
-            "style": {
-                "type": "list"
-            },
-            "category": "音乐",
-            "searchable": 0
-        },
-        {
-            "key": "戏曲多多",
-            "name": "🦋 戏曲 • 多多",
-            "type": 3,
-            "api": "csp_AppLY",
-            "style": {
-                "type": "list"
-            },
-            "category": "综合",
-            "searchable": 0
-        },
-        {
-            "key": "爱听音乐",
-            "name": "🦋 爱听 • 音乐",
-            "type": 3,
-            "api": "https://cnb.cool/fish2018/xs/-/git/raw/main/py/爱听音乐.py",
-            "category": "音乐",
-            "searchable": 0
-        },
-        {
-            "key": "哔哩哔哩演唱会",
-            "name": "🦋 哔哩 • 音乐",
-            "type": 3,
-            "api": "csp_Bili",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 0,
-            "ext": {
-                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/哔哩哔哩演唱会.json",
-                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
-            },
-            "style": {
-                "type": "rect",
-                "ratio": 1.597
-            },
-            "category": "音乐"
-        },
-        {
-            "key": "哔哩哔哩听书",
-            "name": "🦋 哔哩 • 听书",
-            "type": 3,
-            "api": "csp_Bili",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 0,
-            "ext": {
-                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/哔哩哔哩听书.json",
-                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
-            },
-            "style": {
-                "type": "rect",
-                "ratio": 1.597
-            },
-            "category": "音乐"
-        },
-        {
-            "key": "哔哩哔哩相声",
-            "name": "🦋 哔哩 • 相声",
-            "type": 3,
-            "api": "csp_Bili",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 0,
-            "ext": {
-                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/哔哩哔哩相声.json",
-                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
-            },
-            "style": {
-                "type": "rect",
-                "ratio": 1.597
-            },
-            "category": "综合"
-        },
-        {
-            "key": "哔哩哔哩小品",
-            "name": "🦋 哔哩 • 小品",
-            "type": 3,
-            "api": "csp_Bili",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 0,
-            "ext": {
-                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/哔哩哔哩小品.json",
-                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
-            },
-            "style": {
-                "type": "rect",
-                "ratio": 1.597
-            },
-            "category": "综合"
-        },
-        {
-            "key": "哔哩哔哩戏曲",
-            "name": "🦋 哔哩 • 戏曲",
-            "type": 3,
-            "api": "csp_Bili",
-            "searchable": 0,
-            "quickSearch": 0,
-            "filterable": 0,
-            "ext": {
-                "json": "https://cnb.cool/fish2018/xs/-/git/raw/main/json/哔哩哔哩戏曲.json",
-                "cookie": "http://127.0.0.1:9978/file/TVBox/bili_cookie.txt"
-            },
-            "style": {
-                "type": "rect",
-                "ratio": 1.597
-            },
-            "category": "综合"
-        },
-        {
-            "key": "版本信息",
-            "name": "🦋 版本 • 信息",
-            "type": 3,
-            "api": "csp_Market",
-            "searchable": 0,
-            "changeable": 0,
-            "indexs": 0,
-            "ext": "https://pizazz.s3.bitiful.net/single.json",
-            "category": "综合"
-        },
-        {
-            "key": "push_agent",
-            "name": "🦋 手机 • 推送",
-            "type": 3,
-            "api": "csp_Push",
-            "searchable": 0,
-            "filterable": 0,
-            "changeable": 0,
-            "category": "综合"
         },
         {
             "key": "aidan",
