@@ -256,10 +256,10 @@ try:
 
         # --- 5 & 6. 🏆【核心重写：单线清洗、打标、九大方阵动态完美洗牌算法】 ---
         block_1_douban = []       # 1. 豆瓣首页专享
-        block_2_yingshi = []      # 2. 影视/追剧/APP大类
+        block_2_yingshi = []      # 2. 影视/追剧/APP大类 (占据最强检索权)
         block_3_duanju = []       # 3. 短剧/剧场
         block_4_dongman = []      # 4. 动漫类
-        block_5_cili = []         # 5. 网盘/磁力/4K
+        block_5_cili = []         # 5. 网盘/磁力/4K (被屏蔽后台主动搜索)
         block_6_tiyu = []         # 6. 体育/看球/直播
         block_7_shaoer = []       # 7. 少儿课堂/教育
         block_8_yinyue = []       # 8. 音乐/听书/功能线/DJ
@@ -290,7 +290,7 @@ try:
             if "ext" in site and site["ext"] == {}:
                 site["ext"] = ""
 
-            # 🛠️ 2. 【核心修复】瓜子防御机制：如果包含"瓜子"，单独摘出，绝对不准连坐进入福利区
+            # 🛠️ 2. 瓜子靶向保护：防误伤，强力摘出
             is_guazi = "瓜子" in raw_name or "GZ" == s_key
 
             # 🛠️ 3. 精准捕获福利关键字（排除瓜子后）
@@ -301,10 +301,6 @@ try:
                 site["name"] = "豆瓣 • 首页｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜@huliys9"
                 site["category"] = "综合"
                 site["searchable"] = 0
-    
-                # 🌟【硬核修复】强制要求豆瓣首页调用页面底部的 parses 解析列表，彻底封死网盘嗅探失败的死局
-                site["parse"] = 1
-    
                 block_1_douban.append(site)
                 
             elif is_nsfw:
@@ -314,7 +310,7 @@ try:
                 block_9_fuli.append(site)
                 
             elif "短剧" in raw_name or "剧场" in raw_name:
-                # 🛠️ 核心修复：DJ不再进短剧，这里排除带DJ或dj的词
+                # 🛠️ 修正：包含 DJ/dj 关键词的线一律强行分流进入音乐阵营
                 if "dj" in raw_name.lower() or "dj" in s_key.lower():
                     if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                     site["name"] = raw_name
@@ -338,6 +334,11 @@ try:
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 site["category"] = "网盘/磁力"
+                
+                # 🎯【核心黑科技大招】彻底关闭网盘/磁力线的全网被动检索，完全隔绝历史缓存锁定造成的解析报错
+                site["searchable"] = 0
+                site["quickSearch"] = 0
+                
                 if "PanWebShare" in site.get("api", ""):
                     site["changeable"] = 1
                 block_5_cili.append(site)
@@ -356,7 +357,6 @@ try:
                 block_7_shaoer.append(site)
                 
             elif "音乐" in raw_name or "网易云" in raw_name or "听书" in raw_name or "唱会" in raw_name or "fm" in raw_name.lower() or "相声" in raw_name or "小品" in raw_name or "戏曲" in raw_name or "推送" in raw_name or "配置" in raw_name or "版本" in raw_name or "本地" in raw_name or "dj" in raw_name.lower() or "dj" in s_key.lower():
-                # 🛠️ 核心修复：音乐和所有DJ线路无缝收录在此，统一赋予音乐属性
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 if "音乐" in raw_name or "网易云" in raw_name or "听书" in raw_name or "fm" in raw_name.lower() or "dj" in raw_name.lower() or "dj" in s_key.lower():
@@ -377,25 +377,24 @@ try:
             if site.get("category") not in ["少儿", "音乐"] and "searchable" not in site:
                 site["searchable"] = 1
 
-        # 🛠️ 6. 【核心修复】爱奇艺名称鸣谢清空，强制对齐优酷腾讯，直接换上TG频道后缀
+        # 🛠️ 6. 爱奇艺名称调正，去掉冗长致谢词，强制换上统一的官方TG后缀
         for site in block_2_yingshi:
             if site.get("key") == "AQY":
                 site["name"] = "🦋 爱奇艺 ｜Tg：@huliys9"
 
-        # 👑 【全新重排优化：网盘全员降权，影视绝对全网最优先】
-        # 优化后顺序：将网盘磁力阵营(block_5_cili)往后狠狠地移，排在音乐和功能线之后，福利线之前！
+        # 👑 【核心硬组装】全量降权并封锁网盘搜索，单线路优先级完美登顶
         ordered_obj["sites"] = (
-            block_1_douban +       # 1. 豆瓣首页置顶 (Index 0 激活海报墙)
-            block_2_yingshi +      # 2. 传统综合影视单线路 (七味、采集聚合、爱奇艺等) ➡️ 占据搜索最高判定优先级！
-            block_3_duanju +       # 3. 独立短剧
-            block_4_dongman +      # 4. 动漫新番
-            block_6_tiyu +         # 5. 体育直播
-            block_7_shaoer +       # 6. 少儿课堂
-            block_8_yinyue +       # 7. 音乐/听书/功能辅助线
-            block_5_cili +         # 8. 🚨【降权】网盘/磁力/4K大类挪到这里！确保全网聚合搜索时，单线路雷打不动排在最前面！
-            block_9_fuli           # 9. 福利18禁 (继续安全垫底)
+            block_1_douban + 
+            block_2_yingshi + 
+            block_3_duanju + 
+            block_4_dongman + 
+            block_6_tiyu + 
+            block_7_shaoer + 
+            block_8_yinyue + 
+            block_5_cili + 
+            block_9_fuli
         )
-        print(f"🚀 【重排结算】已执行网盘全员大降权方案！当从豆瓣或全局搜索点开影片时，FongMi 将 100% 优先匹配和播放传统单线路，完美解决网盘卡死与解析失败报错！")
+        print(f"🚀 【洗牌结算】全量合并站点重组完成！网盘搜索权限已全面锁定并执行降权排位，影视单线解析成功登顶！")
 
     except Exception as inner_e:
         print(f"⚠️ 提示：美化与智能重排阶段跳过，原因: {inner_e}")
