@@ -68,6 +68,12 @@ MY_CUSTOM_LIVES = [
       "playerType": 2,
       "url": "https://ghfast.top/https://raw.githubusercontent.com/develop202/migu_video/refs/heads/main/interface.txt",
       "ua": "bingcha/1.1 (mianfeifenxiang) "
+    },
+    {
+        "name": "央卫TV｜Tg：@huliys9",
+        "type": 0,
+        "ua": "okhttp/5.3.2",
+        "url": "http://47.120.41.246:8025/vip/jar/zb.php"
     }
 ]
 
