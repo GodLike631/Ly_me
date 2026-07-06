@@ -41,6 +41,7 @@ MY_CUSTOM_SITES = [
 # 📺 【通道二：老杨专属直播手工加线区（从第 6 位开始正向依序后排）】
 # 提示：乡村电视已完美收录！第一个手工源(乡村电视)占第 6 位，第二个(最新电影)自动顺延排第 7 位！
 # 如果手工加的直播线路名字与上游重复，脚本会自动触发“特权锁”全自动蒸发上游同名源！
+# 🌟 特别规则：若线路名称中含有 🔞，则放弃前排特权，自动融入大池子并追加到末尾进行沉底。
 # ====================================================================
 MY_CUSTOM_LIVES = [
     {
@@ -105,7 +106,6 @@ MY_CUSTOM_LIVES = [
         "ua": "okhttp/5.3.2",
         "url": "https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/01%E6%8E%A2%E8%8A%B1%E7%BA%A6%E7%82%AE_20260417_024507.m3u"
     }
-
 ]
 
 # ====================================================================
@@ -238,14 +238,31 @@ json_cnb["sites"] = clean_upstream_sites + MY_CUSTOM_SITES
 # ➕ 【手工特权直播去重锁 & 从第6位正向依序后排核心算法】
 custom_live_names = {live.get("name") for live in MY_CUSTOM_LIVES if live.get("name")}
 base_lives = haitun_lives + cnb_lives
-clean_base_lives = [live for live in base_lives if live.get("name") not in custom_live_names]
 
-# 使用正向切片递增算法，强行让手工源第一个排在第 6 位，剩下的成梯队正向后排展开
-for i, custom_live in enumerate(MY_CUSTOM_LIVES):
-    if len(clean_base_lives) >= (5 + i):
-        clean_base_lives.insert(5 + i, custom_live)
-    else:
+# 🛠️ 核心修改：同时清洗并剔除名称中带有“日本女优”或“日本女友”的上游直播线路
+clean_base_lives = [
+    live for live in base_lives 
+    if live.get("name") not in custom_live_names 
+    and "日本女优" not in live.get("name", "") 
+    and "日本女友" not in live.get("name", "")
+]
+
+# 🛠️ 核心修改：使用正向切片递增算法。如果手工直播源带 🔞 则不占前排，直接归入大池子末尾。
+inserted_count = 0  # 追踪真正插入前排的手工源数量，确保后排递增索引连续
+for custom_live in MY_CUSTOM_LIVES:
+    live_name = custom_live.get("name", "")
+    if "🔞" in live_name:
+        # 带有 🔞 的线路：不给前排特权，直接融入大池子追加到末尾
         clean_base_lives.append(custom_live)
+    else:
+        # 普通线路：依然享受原规则，从第 6 位（索引 5）开始正向依序插入
+        insert_idx = 5 + inserted_count
+        if len(clean_base_lives) >= insert_idx:
+            clean_base_lives.insert(insert_idx, custom_live)
+        else:
+            clean_base_lives.append(custom_live)
+        inserted_count += 1
+
 json_cnb["lives"] = clean_base_lives
 
 final_json_text = json.dumps(json_cnb, ensure_ascii=False, indent=4)
@@ -492,7 +509,7 @@ try:
         # 👑 【新首页硬组装】"key": "热播影视" 携长致谢完美置顶（Index 0），另一个热播"key": "rb"正常随大部队在影视区排列
         ordered_obj["sites"] = (
             block_1_rebo +         # 1. 🎯 "key": "热播影视" 绝对置顶 (0号位海报墙扛把子)
-            block_2_yingshi +      # 2. 传统综合影视单线路 (包含回归的豆瓣首页和原本就在此的 key: rb 线路)
+            block_2_yingshi +      # 2. 传统综合影视单线路 (包含回归的豆瓣首页 and 原本就在此的 key: rb 线路)
             block_3_duanju +       # 3. 独立短剧
             block_4_dongman +      # 4. 动漫新番
             block_6_tiyu +         # 5. 体育直播
