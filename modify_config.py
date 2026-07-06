@@ -80,6 +80,12 @@ MY_CUSTOM_LIVES = [
         "type": 0,
         "ua": "okhttp/5.3.2",
         "url": "https://ghfast.top/https://raw.githubusercontent.com/GodLike631/test/refs/heads/main/datas/%E8%B6%85%E7%A8%B3%E5%AE%9A%E6%B5%81%E7%95%85.txt"
+    },
+    {
+        "name": "哈TV｜Tg：@huliys9",
+        "type": 0,
+        "ua": "okhttp/5.3.2",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/%E5%93%88TV.txt"
     }
 ]
 
