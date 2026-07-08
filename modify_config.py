@@ -111,6 +111,12 @@ MY_CUSTOM_LIVES = [
         "type": 0,
         "ua": "okhttp/5.3.2",
         "url": "https://ghfast.top/https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/%E6%AC%A7%E7%BE%8E%E9%A2%91%E9%81%93.m3u"
+    },
+    {
+        "name": "传说｜Tg：@huliys9",
+        "type": 0,
+        "ua": "okhttp/5.3.2",
+        "url": "https://qm.qq.com/q/ft6OpxdSEg"
     }
 ]
 
