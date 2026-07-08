@@ -113,10 +113,10 @@ MY_CUSTOM_LIVES = [
         "url": "https://ghfast.top/https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/%E6%AC%A7%E7%BE%8E%E9%A2%91%E9%81%93.m3u"
     },
     {
-        "name": "暮雨｜Tg：@huliys9",
+        "name": "松视🔞｜Tg：@huliys9",
         "type": 0,
         "ua": "okhttp/5.3.2",
-        "url": "https://4key.cn/vy6"
+        "url": "https://pan.meil.wang/f/WgVib/%E6%9D%BE%E8%A7%863%E5%A5%97.txt"
     }
 ]
 
