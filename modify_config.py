@@ -131,7 +131,7 @@ MY_CUSTOM_LIVES = [
       "type": 3,
       "url": "https://iptv.yang-1989.xyz/playlist.m3u",
       "epg":"https://material.yang-1989.xyz/epg.xml.gz",
-      "ua": "okhttp/3.8.1",
+      "ua": "okhttp/5.3.2",
       "timeout": 10,
       "playerType": 2
     },
@@ -139,7 +139,7 @@ MY_CUSTOM_LIVES = [
       "name": "Live「直播」｜Tg：@huliys9",
       "type": 3,
       "url": "https://live.yang-1989.eu.org/Live.m3u",
-      "ua": "okhttp/3.8.1",
+      "ua": "okhttp/5.3.2",
       "timeout": 10,
       "playerType": 2
     },
@@ -148,7 +148,7 @@ MY_CUSTOM_LIVES = [
       "type": 3,
       "url": "https://iptv.yang-1989.xyz/myTV/playlist.m3u",
       "epg":"https://material.yang-1989.xyz/epg.xml.gz",
-      "ua": "okhttp/3.8.1",
+      "ua": "okhttp/5.3.2",
       "timeout": 10,
       "playerType": 2
     },
@@ -157,10 +157,23 @@ MY_CUSTOM_LIVES = [
       "type": 3,
       "url": "https://cdn-1.yang-1989.xyz/sprt/playlist.m3u",
       "epg":"https://material.yang-1989.xyz/epg.xml.gz",
-      "ua": "okhttp/3.8.1",
+      "ua": "okhttp/5.3.2",
+      "timeout": 10,
+      "playerType": 2
+    },
+    {
+      "name": "合家欢TV｜Tg：@huliys9",
+      "type": 3,
+      "url": "https://gh-proxy.org/https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/%E5%90%88%E5%AE%B6%E6%AC%A2TV.txt",
+      "epg":"https://material.yang-1989.xyz/epg.xml.gz",
+      "ua": "okhttp/5.3.2",
       "timeout": 10,
       "playerType": 2
     }
+
+
+
+    https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/%E5%90%88%E5%AE%B6%E6%AC%A2TV.txt
     
 ]
 
