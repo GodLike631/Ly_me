@@ -160,15 +160,6 @@ MY_CUSTOM_LIVES = [
       "ua": "okhttp/5.3.2",
       "timeout": 10,
       "playerType": 2
-    },
-    {
-      "name": "合家欢TV｜Tg：@huliys9",
-      "type": 3,
-      "url": "https://gh-proxy.org/https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/%E5%90%88%E5%AE%B6%E6%AC%A2TV.txt",
-      "epg":"https://material.yang-1989.xyz/epg.xml.gz",
-      "ua": "okhttp/5.3.2",
-      "timeout": 10,
-      "playerType": 2
     }
 ]
 
