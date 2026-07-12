@@ -170,11 +170,6 @@ MY_CUSTOM_LIVES = [
       "timeout": 10,
       "playerType": 2
     }
-
-
-
-    https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/%E5%90%88%E5%AE%B6%E6%AC%A2TV.txt
-    
 ]
 
 # ====================================================================
