@@ -16,6 +16,7 @@ tracker_path = 'datas/最新接口文件名.txt'
 
 # ====================================================================
 # ✍️ 【通道一：老杨专属点播手工加线区】
+# 提示：想单独加点播爬虫线贴在这里，如果上游有同 key 线路，脚本会自动蒸发上游、以此处为准。
 # ====================================================================
 MY_CUSTOM_SITES = [
     {
@@ -37,9 +38,19 @@ MY_CUSTOM_SITES = [
 ]
 
 # ====================================================================
-# 📺 【通道二：老杨专属直播手工加线区】
+# 📺 【通道二：老杨专属直播手工加线区（从第 6 位开始正向依序后排）】
+# 提示：乡村电视已完美收录！第一个手工源(乡村电视)占第 6 位，第二个(最新电影)自动顺延排第 7 位！
+# 如果手工加的直播线路名字与上游重复，脚本会自动触发“特权锁”全自动蒸发上游同名源！
+# 🌟 特别规则：若线路名称中含有 🔞，则放弃前排特权，自动融入大池子并追加到末尾进行沉底。
 # ====================================================================
 MY_CUSTOM_LIVES = [
+    {
+        "name": "乡村电视 ｜Tg：@huliys9",
+        "type": 0,
+        "playerType": 2,
+        "ua": "okhttp/5.3.2",
+        "url": "https://gh-proxy.com/https://raw.githubusercontent.com/GodLike631/test/refs/heads/main/datas/%E4%B9%A1%E6%9D%91%E7%94%B5%E8%A7%86.txt"
+    },
     {
       "name": "锋云直播｜Tg：@huliys9",
       "type": 3,
@@ -120,7 +131,7 @@ MY_CUSTOM_LIVES = [
       "type": 3,
       "url": "https://iptv.yang-1989.xyz/playlist.m3u",
       "epg":"https://material.yang-1989.xyz/epg.xml.gz",
-      "ua": "okhttp/3.8.1",
+      "ua": "okhttp/5.3.2",
       "timeout": 10,
       "playerType": 2
     },
@@ -128,7 +139,7 @@ MY_CUSTOM_LIVES = [
       "name": "Live「直播」｜Tg：@huliys9",
       "type": 3,
       "url": "https://live.yang-1989.eu.org/Live.m3u",
-      "ua": "okhttp/3.8.1",
+      "ua": "okhttp/5.3.2",
       "timeout": 10,
       "playerType": 2
     },
@@ -137,7 +148,7 @@ MY_CUSTOM_LIVES = [
       "type": 3,
       "url": "https://iptv.yang-1989.xyz/myTV/playlist.m3u",
       "epg":"https://material.yang-1989.xyz/epg.xml.gz",
-      "ua": "okhttp/3.8.1",
+      "ua": "okhttp/5.3.2",
       "timeout": 10,
       "playerType": 2
     },
@@ -146,14 +157,14 @@ MY_CUSTOM_LIVES = [
       "type": 3,
       "url": "https://cdn-1.yang-1989.xyz/sprt/playlist.m3u",
       "epg":"https://material.yang-1989.xyz/epg.xml.gz",
-      "ua": "okhttp/3.8.1",
+      "ua": "okhttp/5.3.2",
       "timeout": 10,
       "playerType": 2
     }
 ]
 
 # ====================================================================
-# ⏰ 【每月 1 号自动大洗牌与控制开关自动生成逻辑】
+# ⏰ 【每月 1 号自动大洗牌与控制开关自动生成逻辑】 (原汁原味保留)
 # ====================================================================
 today = datetime.datetime.now()
 current_month = str(today.month) 
@@ -174,10 +185,10 @@ if is_reset_day and saved_month != current_month:
     current_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=3))
     with open(lock_file_path, 'w', encoding='utf-8') as f:
         f.write(f"{current_month}-{current_token}")
-    print(f"⏰ 【每月1号全新硬核洗牌】已生成本月新密锁: {current_token}")
+    print(f"⏰ 【每月1号全新硬核洗牌】检测到进入新月份 {current_month} 月！已全自动抽签生成本月新密锁: {current_token}")
 elif is_reset_day and saved_month == current_month:
     current_token = saved_code
-    print(f"🔒 【安全阀拦截】保持当月原暗号: {current_token}")
+    print(f"🔒 【安全阀拦截】今日 1号已经是当月第二次运行，保持原暗号: {current_token}")
 else:
     if not saved_code or len(saved_code) != 3 or "-" not in (content if os.path.exists(lock_file_path) else ""):
         current_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=3))
@@ -188,34 +199,34 @@ else:
     print(f"📡 正常沿用本月密锁: {current_token}")
 
 if current_token in ["全量版", "纯净版"]:
-    output_filename = "蝴蝶影视全量版.json"
+    output_filename = "老杨TV全量版.json"
 else:
-    output_filename = f"蝴蝶影视全量版{current_token}.json"
+    output_filename = f"老杨TV全量版{current_token}.json"
 
 output_path = f"datas/{output_filename}"
 print(f"🎯 最终结算 -> 目标输出：{output_filename}")
 
 # ====================================================================
-# 🛡️ 【金蝉脱壳：全量版过期旧线自动全文字大轰炸】
+# 🛡️ 【金蝉脱壳：全量版过期旧线自动全文字大轰炸】 (原汁原味保留)
 # ====================================================================
-old_configs = glob.glob('datas/蝴蝶影视全量版*.json') + glob.glob('datas/蝴蝶影视*.json') + glob.glob('datas/老杨TV*.json')
+old_configs = glob.glob('datas/老杨TV全量版*.json') + glob.glob('datas/老杨TV*.json')
 for old_file in old_configs:
     if os.path.basename(old_file) != output_filename:
         try:
             trap_json = {
                 "spider": "", 
-                "notice": f"⚠️ 警告：关注Tg频道（@huliys9）获取最新接口密码\n\n当前专线已过期断流！老链接已彻底作废！",
-                "warningText": "👑 特别提示：关注Tg频道（@huliys9）获取最新接口",
+                "notice": f"⚠️ 警告：当前专线已过期断流！老链接已彻底作废！\n\n最新全量版链接或当前密码请加QQ群“532637640”获取",
                 "sites": [
-                    {"key": "蝴蝶纯文字提示", "name": "🚨 ⚠️ 警告：关注Tg频道（@huliys9）获取最新接口密码\n\n当前专线已过期断流！老链接已彻底作废！🚨 当前专线密码已过期断流！", "type": 3, "api": "csp_JuDou", "searchable": 0, "quickSearch": 0, "filterable": 0},
-                    {"key": "蝴蝶纯文字提示2", "name": "🚨 ⚠️ 警告：关注Tg频道（@huliys9）获取最新接口密码\n\n当前专线已过期断流！老链接已彻底作废！", "type": 3, "api": "csp_JuDou", "searchable": 0, "quickSearch": 0, "filterable": 0}
+                    {"key": "老杨纯文字提示", "name": "🚨 请前往QQ群“532637640”获取最新密码🚨 当前专线密码已过期断流！", "type": 3, "api": "csp_JuDou", "searchable": 0, "quickSearch": 0, "filterable": 0},
+                    {"key": "老杨纯文字提示2", "name": "🚨 请前往QQ群“532637640”获取最新全量版链接", "type": 3, "api": "csp_JuDou", "searchable": 0, "quickSearch": 0, "filterable": 0}
                 ],
                 "lives": [
-                    {"group": "🚨 接口过期断流 ｜ 提示", "channels": [{"name": "👉 线路已过期 ➡️ 关注Tg频道（@huliys9）获取最新接口密码\n\n当前专线已过期断流！老链接已彻底作废！", "urls": ["http://127.0.0.1"]}]}
+                    {"group": "🚨 接口过期断流 ｜ 提示", "channels": [{"name": "👉 线路已过期 ➡️ 加QQ群“532637640”获取最新全量版密码", "urls": ["http://127.0.0.1"]}]}
                 ]
             }
             with open(old_file, 'w', encoding='utf-8') as f:
                 json.dump(trap_json, f, ensure_ascii=False, indent=4)
+            print(f"📡 【金蝉脱壳】已成功将过期旧线调包为纯文字大轰炸: {old_file}")
         except:
             pass
 
@@ -223,8 +234,9 @@ for garbage in glob.glob('datas/config_*.json'):
     try: os.remove(garbage)
     except: pass
 
+
 # ====================================================================
-# 🧠 【核心逻辑：正统 JSON 对象读取与合并逻辑】
+# 🧠 【核心逻辑：正统 JSON 对象读取与合并逻辑】 (原汁原味保留)
 # ====================================================================
 def load_json_safe(path):
     if not os.path.exists(path):
@@ -233,7 +245,7 @@ def load_json_safe(path):
         try:
             return json.load(f)
         except Exception as e:
-            print(f"❌ 错误：{path} JSON 格式不正确！")
+            print(f"❌ 错误：{path} JSON 格式不正确！无法解析。")
             return {}
 
 json_cnb = load_json_safe(cnb_path)
@@ -302,15 +314,17 @@ for custom_live in MY_CUSTOM_LIVES:
 json_cnb["lives"] = clean_base_lives
 
 final_json_text = json.dumps(json_cnb, ensure_ascii=False, indent=4)
+
 final_json_text = final_json_text.replace('"key": "hajim-腾讯备"', '"spider": "./tvbox.jar",\n            "key": "hajim-腾讯备"')
 final_json_text = final_json_text.replace('"key": "茫茫"', '"spider": "./tvbox.jar",\n            "key": "茫茫"')
+
 final_json_text = final_json_text.replace('🐬', '').replace('海豚影视', '').replace('海豚', '')
 final_json_text = final_json_text.replace('完全免费，如有收费的都是骗子', '').replace('交流群 TG：@hshsjk9', '')
 
 path_replacements = {
     './spider.jar': 'https://cnb.cool/fish2018/xs/-/git/raw/main/spider.jar',
     './XBPQ/': 'https://cnb.cool/fish2018/xs/-/git/raw/main/XBPQ/',
-    './XYQHiker/': 'https://cnb.cool/fish2018/xs/-/git/raw/main/XYQHiker/',
+    './XYQHiker': 'https://cnb.cool/fish2018/xs/-/git/raw/main/XYQHiker/',
     './js/': 'https://cnb.cool/fish2018/xs/-/git/raw/main/js/',
     './json/': 'https://cnb.cool/fish2018/xs/-/git/raw/main/json/',
     './py/': 'https://cnb.cool/fish2018/xs/-/git/raw/main/py/',
@@ -319,17 +333,19 @@ path_replacements = {
 for src, dst in path_replacements.items():
     final_json_text = final_json_text.replace(src, dst)
 
-thanks_warning = "👑 🚨 重要提示：本接口密码不定期全自动更换！如果遇到失效或断流，请及时回 Telegram 频道（@huliys9）获取当前最新密码!"
-welcome_notice = "👑 欢迎使用【蝴蝶影视粉丝专属缝合专线】！本接口由蝴蝶影视结合海豚佬&鱼佬的优质核心资源缝合而成，纯净无广告！🚨 重要提示：本接口密码不定期全自动更换！如果遇到失效或断流，请及时回 Telegram 频道（@huliys9）获取当前最新密码！"
+thanks_warning = "\n\n👑如果遇到失效 or 断流，请及时回 Telegram 频道（@huliys9）或微信群获取当前最新密码！ "
+welcome_notice = "👑 欢迎使用【老杨TV粉丝专属缝合专线】！本接口由老杨TV结合佬&鱼佬的优质核心资源缝合而成，纯净无广告！🚨 重要提示：本接口密码不定期全自动更换！如果遇到失效 or 断流，请及时回 Telegram 频道（@huliys9）或微信群获取当前最新密码！"
 
 try:
     final_obj = json.loads(final_json_text)
-    final_obj["notice"] = welcome_notice
-    final_obj["warningText"] = thanks_warning
+    final_obj["notice"] = welcome_notice + thanks_warning
+    if "warningText" in final_obj:
+        final_obj.pop("warningText")
     
     ordered_obj = {}
-    if "notice" in final_obj: ordered_obj["notice"] = final_obj.pop("notice")
-    if "warningText" in final_obj: ordered_obj["warningText"] = final_obj.pop("warningText")
+    if "notice" in final_obj: 
+        ordered_obj["notice"] = final_obj.pop("notice")
+        
     ordered_obj.update(final_obj)
     
     try:
@@ -355,6 +371,29 @@ try:
             if not any(d.get("name") == "AliDNS" for d in ordered_obj["doh"]):
                 ordered_obj["doh"].insert(0, ali_doh)
 
+        if "rules" in ordered_obj and isinstance(ordered_obj["rules"], list):
+            custom_js_rules = [
+                "console.log('老楊TV高級WebView攔截器啟動');",
+                "window.addEventListener('DOMContentLoaded', function() {",
+                "   document.querySelectorAll('video').forEach(v => { v.muted = true; v.play().catch(e=>{}); });",
+                "   Function.prototype.__constructor__ = Function.prototype.constructor;",
+                "   Function.prototype.constructor = function() { if (arguments && typeof arguments[0] === 'string' && arguments[0].includes('debugger')) { return function(){}; } return Function.prototype.__constructor__.apply(this, arguments); };",
+                "});",
+                "setInterval(() => { let selectors = ['.adv-class', '.pop-banner', '#notice-modal', '[id*=\"partner\"]', '[class*=\"baidu\"]', 'iframe[src*=\"game\"]', 'iframe[src*=\"bet\"]', '#pop-ad', '.sidebar-ads', 'a[href*=\"999\"]']; selectors.forEach(sel => { document.querySelectorAll(sel).forEach(el => el.remove()); }); }, 400);"
+            ]
+            current_rules = ordered_obj.get("rules", [])
+            ad_hosts = ["vip.wwgz.cn", "lziplayer.com", "m3u8.apibdzy.com", "cj.ffzyapi.com", "api.hbzyapi.com"]
+            for rule in current_rules:
+                if isinstance(rule, dict) and "hosts" in rule:
+                    for h in rule["hosts"]:
+                        if h not in ad_hosts: ad_hosts.append(h)
+            js_injection_rule = {
+                "name": "老楊TV·雲端高級去广告JS注入",
+                "hosts": ad_hosts,
+                "script": custom_js_rules
+            }
+            ordered_obj["rules"] = [js_injection_rule] + [r for r in current_rules if r.get("name") != "老楊TV·雲端高級去广告JS注入"]
+
         if "lives" in ordered_obj and isinstance(ordered_obj["lives"], list):
             clean_lives = []
             for live in ordered_obj["lives"]:
@@ -363,33 +402,6 @@ try:
                         live["ua"] = "okhttp/5.3.2"
                     clean_lives.append(live)
             ordered_obj["lives"] = clean_lives
-
-        custom_js_rules = [
-            "console.log('蝴蝶影視高級WebView攔截器啟動');",
-            "window.addEventListener('DOMContentLoaded', function() {",
-            "   document.querySelectorAll('video').forEach(v => { v.muted = true; v.play().catch(e=>{}); });",
-            "   Function.prototype.__constructor__ = Function.prototype.constructor;",
-            "   Function.prototype.constructor = function() { if (arguments && typeof arguments[0] === 'string' && arguments[0].includes('debugger')) { return function(){}; } return Function.prototype.__constructor__.apply(this, arguments); };",
-            "});",
-            "setInterval(() => { let selectors = ['.adv-class', '.pop-banner', '#notice-modal', '[id*=\"partner\"]', '[class*=\"baidu\"]', 'iframe[src*=\"game\"]', 'iframe[src*=\"bet\"]', '#pop-ad', '.sidebar-ads', 'a[href*=\"999\"]']; selectors.forEach(sel => { document.querySelectorAll(sel).forEach(el => el.remove()); }); }, 400);"
-        ]
-
-        current_rules = ordered_obj.get("rules", [])
-        if not isinstance(current_rules, list):
-            current_rules = []
-            
-        ad_hosts = ["vip.wwgz.cn", "lziplayer.com", "m3u8.apibdzy.com", "cj.ffzyapi.com", "api.hbzyapi.com"]
-        for rule in current_rules:
-            if isinstance(rule, dict) and "hosts" in rule:
-                for h in rule["hosts"]:
-                    if h not in ad_hosts: ad_hosts.append(h)
-
-        js_injection_rule = {
-            "name": "蝴蝶影视·雲端高級去廣告JS注入",
-            "hosts": ad_hosts,
-            "script": custom_js_rules
-        }
-        ordered_obj["rules"] = [js_injection_rule] + [r for r in current_rules if r.get("name") != "老楊TV·雲端高級去广告JS注入"]
 
         block_1_rebo = []         
         block_2_yingshi = []      
@@ -401,7 +413,7 @@ try:
         block_8_yinyue = []       
         block_9_fuli = []         
 
-        tg_tail_count = 0  
+        tg_tail_count = 0
         for site in ordered_obj.get("sites", []):
             if "name" not in site:
                 continue
@@ -445,11 +457,8 @@ try:
                 block_2_yingshi.append(site)
             elif is_nsfw:
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
-                if "🔞" not in raw_name: raw_name = f"{raw_name}｜🔞"
                 site["name"] = raw_name
                 site["category"] = "福利"
-                site["searchable"] = 0  
-                site["quickSearch"] = 0
                 block_9_fuli.append(site)
             elif "短剧" in raw_name or "剧场" in raw_name:
                 if "dj" in raw_name.lower() or "dj" in s_key.lower():
@@ -469,13 +478,12 @@ try:
                 site["name"] = raw_name
                 site["category"] = "动漫"
                 block_4_dongman.append(site)
-            elif "磁力" in raw_name or "索" in raw_name or "盘" in raw_name or "云盘" in raw_name or "4k" in raw_name.lower() or "PanWebShare" in str(s_api):
+            elif "磁力" in raw_name or "索" in raw_name or "盘" in raw_name or "云盘" in raw_name or "4k" in raw_name.lower():
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 site["category"] = "网盘/磁力"
-                site["searchable"] = 0
-                site["quickSearch"] = 0
-                site["changeable"] = 1
+                if "PanWebShare" in site.get("api", ""):
+                    site["changeable"] = 1
                 block_5_cili.append(site)
             elif "体育" in raw_name or "球" in raw_name or "直播" in raw_name:
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
@@ -501,7 +509,7 @@ try:
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 site["category"] = "综合"
-                block_2_y推影.append(site)
+                block_2_yingshi.append(site)
 
             if site.get("category") not in ["少儿", "音乐"] and "searchable" not in site:
                 site["searchable"] = 1
@@ -514,9 +522,9 @@ try:
             block_1_rebo + block_2_yingshi + block_3_duanju + block_4_dongman +
             block_6_tiyu + block_7_shaoer + block_8_yinyue + block_5_cili + block_9_fuli
         )
-        print(f"🚀 【洗牌结算】双通道完全体融合重组完成！")
+        print(f"🚀 【洗牌结算】靶向隔离重排成功！")
     except Exception as inner_e:
-        print(f"⚠️ 提示：高级大屏排版美化阶段跳过: {inner_e}")
+        print(f"⚠️ 提示：美化与智能重排阶段跳过: {inner_e}")
 
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(ordered_obj, f, ensure_ascii=False, indent=4)
@@ -528,3 +536,7 @@ try:
 
 except Exception as e:
     print(f"❌ 严重错误：最后的本地渲染失败: {e}")
+
+if not os.path.exists(lock_file_path) or "-" not in (open(lock_file_path, 'r', encoding='utf-8').read() if os.path.exists(lock_file_path) else ""):
+    with open(lock_file_path, 'w', encoding='utf-8') as f:
+        f.write(f"{current_month}-{current_token}")
