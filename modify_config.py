@@ -5,6 +5,8 @@ import string
 import glob
 import datetime
 import json
+import urllib.request
+import urllib.parse
 
 cnb_path = 'datas/cnb.json'
 haitun_path = 'datas/haitun.json'
@@ -16,7 +18,6 @@ tracker_path = 'datas/最新接口文件名.txt'
 
 # ====================================================================
 # ✍️ 【通道一：老杨专属点播手工加线区】
-# 提示：想单独加点播爬虫线贴在这里，如果上游有同 key 线路，脚本会自动蒸发上游、以此处为准。
 # ====================================================================
 MY_CUSTOM_SITES = [
     {
@@ -38,10 +39,7 @@ MY_CUSTOM_SITES = [
 ]
 
 # ====================================================================
-# 📺 【通道二：老杨专属直播手工加线区（从第 6 位开始正向依序后排）】
-# 提示：乡村电视已完美收录！第一个手工源(乡村电视)占第 6 位，第二个(最新电影)自动顺延排第 7 位！
-# 如果手工加的直播线路名字与上游重复，脚本会自动触发“特权锁”全自动蒸发上游同名源！
-# 🌟 特别规则：若线路名称中含有 🔞，则放弃前排特权，自动融入大池子并追加到末尾进行沉底。
+# 📺 【通道二：老杨专属直播手工加线区】
 # ====================================================================
 MY_CUSTOM_LIVES = [
     {
@@ -93,7 +91,7 @@ MY_CUSTOM_LIVES = [
         "name": "国产精品🔞｜Tg：@huliys9",
         "type": 0,
         "ua": "okhttp/5.3.2",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/01%E5%9B%BD%E4%BA%A7%E7%25E5%2593%2581_20260417_024507.m3u"
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/01%E5%9B%BD%E4%BA%A7%E7%B2%BE%E5%93%81_20260417_024507.m3u"
     },
     {
         "name": "4K福利🔞｜Tg：@huliys9",
@@ -163,10 +161,9 @@ if is_reset_day and saved_month != current_month:
     current_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=3))
     with open(lock_file_path, 'w', encoding='utf-8') as f:
         f.write(f"{current_month}-{current_token}")
-    print(f"⏰ 【每月1号全新硬核洗牌】检测到进入新月份 {current_month} 月！已全自动抽签生成本月新密锁: {current_token}")
+    print(f"⏰ 【每月1号全新硬核洗牌】已全自动抽签生成本月新密锁: {current_token}")
 elif is_reset_day and saved_month == current_month:
     current_token = saved_code
-    print(f"🔒 【安全阀拦截】今日 1号已经是当月第二次运行，保持原暗号: {current_token}")
 else:
     if not saved_code or len(saved_code) != 3 or "-" not in (content if os.path.exists(lock_file_path) else ""):
         current_token = ''.join(random.choices(string.ascii_lowercase + string.digits, k=3))
@@ -174,7 +171,6 @@ else:
             f.write(f"{current_month}-{current_token}")
     else:
         current_token = saved_code
-    print(f"📡 正常沿用本月密锁: {current_token}")
 
 if current_token in ["全量版", "纯净版"]:
     output_filename = "老杨TV全量版.json"
@@ -182,7 +178,6 @@ else:
     output_filename = f"老杨TV全量版{current_token}.json"
 
 output_path = f"datas/{output_filename}"
-print(f"🎯 最终结算 -> 目标输出：{output_filename}")
 
 # ====================================================================
 # 🛡️ 【金蝉脱壳：全量版过期旧线自动全文字大轰炸】
@@ -204,7 +199,6 @@ for old_file in old_configs:
             }
             with open(old_file, 'w', encoding='utf-8') as f:
                 json.dump(trap_json, f, ensure_ascii=False, indent=4)
-            print(f"📡 【金蝉脱壳】已成功将过期旧线调包为纯文字大轰炸: {old_file}")
         except:
             pass
 
@@ -220,11 +214,8 @@ def load_json_safe(path):
     if not os.path.exists(path):
         return {}
     with open(path, 'r', encoding='utf-8') as f:
-        try:
-            return json.load(f)
-        except Exception as e:
-            print(f"❌ 错误：{path} JSON 格式不正确！无法解析。")
-            return {}
+        try: return json.load(f)
+        except: return {}
 
 json_cnb = load_json_safe(cnb_path)
 json_haitun = load_json_safe(haitun_path)
@@ -239,7 +230,6 @@ for item in lz_sites:
     if "🔞" in item.get("name", ""):
         raw_name = item["name"].replace("🔞", "").strip()
         item["name"] = f"{raw_name}｜🔞"
-        
         if "api" in item and isinstance(item["api"], str):
             if item["api"].startswith("./py/"):
                 item["api"] = item["api"].replace("./py/", "https://gh-proxy.com/https://raw.githubusercontent.com/ediart/tvbox/refs/heads/main/lz/py/")
@@ -250,11 +240,9 @@ for item in lz_sites:
         lz_nsfw_list.append(item)
 
 for item in haitun_sites:
-    if "name" in item:
-        item["name"] = f"{item['name']}｜Tg：@huliys9"
+    if "name" in item: item["name"] = f"{item['name']}｜Tg：@huliys9"
 for item in haitun_lives:
-    if "name" in item:
-        item["name"] = f"{item['name']}｜Tg：@huliys9"
+    if "name" in item: item["name"] = f"{item['name']}｜Tg：@huliys9"
 
 cnb_sites = json_cnb.get("sites", [])
 cnb_lives = json_cnb.get("lives", [])
@@ -292,12 +280,8 @@ for custom_live in MY_CUSTOM_LIVES:
 json_cnb["lives"] = clean_base_lives
 
 final_json_text = json.dumps(json_cnb, ensure_ascii=False, indent=4)
-
-final_json_text = final_json_text.replace('"key": "hajim-腾讯备"', '"spider": "./tvbox.jar",\n            "key": "hajim-腾讯备"')
-final_json_text = final_json_text.replace('"key": "茫茫"', '"spider": "./tvbox.jar",\n            "key": "茫茫"')
-
-final_json_text = final_json_text.replace('🐬', '').replace('海豚影视', '').replace('海豚', '')
-final_json_text = final_json_text.replace('完全免费，如有收费的都是骗子', '').replace('交流群 TG：@hshsjk9', '')
+final_json_text = final_json_text.replace('"key": "hajim-腾讯备"', '"spider": "./tvbox.jar",\n            "key": "hajim-腾讯备"').replace('"key": "茫茫"', '"spider": "./tvbox.jar",\n            "key": "茫茫"')
+final_json_text = final_json_text.replace('🐬', '').replace('海豚影视', '').replace('海豚', '').replace('完全免费，如有收费的都是骗子', '').replace('交流群 TG：@hshsjk9', '')
 
 path_replacements = {
     './spider.jar': 'https://cnb.cool/fish2018/xs/-/git/raw/main/spider.jar',
@@ -317,13 +301,10 @@ welcome_notice = "👑 欢迎使用【老杨TV粉丝专属缝合专线】！本�
 try:
     final_obj = json.loads(final_json_text)
     final_obj["notice"] = welcome_notice + thanks_warning
-    if "warningText" in final_obj:
-        final_obj.pop("warningText")
+    if "warningText" in final_obj: final_obj.pop("warningText")
     
     ordered_obj = {}
-    if "notice" in final_obj: 
-        ordered_obj["notice"] = final_obj.pop("notice")
-        
+    if "notice" in final_obj: ordered_obj["notice"] = final_obj.pop("notice")
     ordered_obj.update(final_obj)
     
     try:
@@ -338,16 +319,9 @@ try:
 
         if "doh" in ordered_obj and isinstance(ordered_obj["doh"], list):
             for doh_item in ordered_obj["doh"]:
-                if doh_item.get("url", "").endswith("/dns-quer"):
-                    doh_item["url"] = doh_item["url"] + "y"
-            
-            ali_doh = {
-                "name": "AliDNS",
-                "url": "https://dns.alidns.com/dns-query",
-                "ips": ["223.5.5.5", "223.6.6.6"]
-            }
-            if not any(d.get("name") == "AliDNS" for d in ordered_obj["doh"]):
-                ordered_obj["doh"].insert(0, ali_doh)
+                if doh_item.get("url", "").endswith("/dns-quer"): doh_item["url"] = doh_item["url"] + "y"
+            ali_doh = {"name": "AliDNS", "url": "https://dns.alidns.com/dns-query", "ips": ["223.5.5.5", "223.6.6.6"]}
+            if not any(d.get("name") == "AliDNS" for d in ordered_obj["doh"]): ordered_obj["doh"].insert(0, ali_doh)
 
         if "rules" in ordered_obj and isinstance(ordered_obj["rules"], list):
             custom_js_rules = [
@@ -365,66 +339,37 @@ try:
                 if isinstance(rule, dict) and "hosts" in rule:
                     for h in rule["hosts"]:
                         if h not in ad_hosts: ad_hosts.append(h)
-            js_injection_rule = {
-                "name": "老楊TV·雲端高級去广告JS注入",
-                "hosts": ad_hosts,
-                "script": custom_js_rules
-            }
+            js_injection_rule = {"name": "老楊TV·雲端高級去广告JS注入", "hosts": ad_hosts, "script": custom_js_rules}
             ordered_obj["rules"] = [js_injection_rule] + [r for r in current_rules if r.get("name") != "老楊TV·雲端高級去广告JS注入"]
 
         if "lives" in ordered_obj and isinstance(ordered_obj["lives"], list):
             clean_lives = []
             for live in ordered_obj["lives"]:
                 if live and isinstance(live, dict):
-                    if not live.get("ua") or live.get("ua") == "okhttp":
-                        live["ua"] = "okhttp/5.3.2"
+                    if not live.get("ua") or live.get("ua") == "okhttp": live["ua"] = "okhttp/5.3.2"
                     clean_lives.append(live)
             ordered_obj["lives"] = clean_lives
 
-        block_1_rebo = []         
-        block_2_yingshi = []      
-        block_3_duanju = []       
-        block_4_dongman = []      
-        block_5_cili = []         
-        block_6_tiyu = []         
-        block_7_shaoer = []       
-        block_8_yinyue = []       
-        block_9_fuli = []      
-
+        block_1_rebo, block_2_yingshi, block_3_duanju, block_4_dongman, block_5_cili, block_6_tiyu, block_7_shaoer, block_8_yinyue, block_9_fuli = [], [], [], [], [], [], [], [], []
         tg_tail_count = 0
         for site in ordered_obj.get("sites", []):
-            if "name" not in site:
-                continue
-                
+            if "name" not in site: continue
             raw_name = site["name"]
-            s_key = site.get("key", "")
-            s_genre = site.get("genre", "")
-            s_api = site.get("api", "")
-
-            for char in ['丨', '┃', ' ']:
-                raw_name = raw_name.strip(char)
+            s_key, s_genre, s_api = site.get("key", ""), site.get("genre", ""), site.get("api", "")
+            for char in ['丨', '┃', ' ']: raw_name = raw_name.strip(char)
             raw_name = re.sub(r'\s+', ' ', raw_name)
-            
             if "｜Tg：@huliys9" in raw_name:
                 tg_tail_count += 1
                 if tg_tail_count > 5: raw_name = raw_name.replace("｜Tg：@huliys9", "").strip()
-            elif "｜Tg:@huliys9" in raw_name:
-                tg_tail_count += 1
-                if tg_tail_count > 5: raw_name = raw_name.replace("｜Tg:@huliys9", "").strip()
-
-            if "ext" in site and site["ext"] == {}:
-                site["ext"] = ""
-
+            if "ext" in site and site["ext"] == {}: site["ext"] = ""
             if isinstance(s_api, str) and "PanWebShare" in s_api:
                 site["api"] = "csp_PanWebShare"
-                if "jar" in site:
-                    site.pop("jar")
+                if "jar" in site: site.pop("jar")
 
             is_guazi = "瓜子" in raw_name or "GZ" == s_key
             is_nsfw = False if is_guazi else ("🔞" in raw_name or "色播" in raw_name or "av" in s_key.lower() or "瓜" in raw_name or "爆料" in raw_name or "chat" in raw_name.lower() or "cam" in raw_name.lower() or "panda" in raw_name.lower() or "video" in raw_name.lower() or "md" in s_key.lower())
-            is_target_rebo_main = (s_key == "热播影视")
-
-            if is_target_rebo_main:
+            
+            if s_key == "热播影视":
                 site["name"] = "热播 • APP｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜@huliys9"
                 site["category"] = "综合"
                 block_1_rebo.append(site)
@@ -460,8 +405,7 @@ try:
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
                 site["category"] = "网盘/磁力"
-                if "PanWebShare" in site.get("api", ""):
-                    site["changeable"] = 1
+                if "PanWebShare" in site.get("api", ""): site["changeable"] = 1
                 block_5_cili.append(site)
             elif "体育" in raw_name or "球" in raw_name or "直播" in raw_name:
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
@@ -477,10 +421,7 @@ try:
             elif "音乐" in raw_name or "网易云" in raw_name or "听书" in raw_name or "唱会" in raw_name or "fm" in raw_name.lower() or "相声" in raw_name or "小品" in raw_name or "戏曲" in raw_name or "推送" in raw_name or "配置" in raw_name or "版本" in raw_name or "本地" in raw_name or "dj" in raw_name.lower() or "dj" in s_key.lower():
                 if not raw_name.startswith("🦋"): raw_name = f"🦋 {raw_name}"
                 site["name"] = raw_name
-                if "音乐" in raw_name or "网易云" in raw_name or "听书" in raw_name or "fm" in raw_name.lower() or "dj" in raw_name.lower() or "dj" in s_key.lower():
-                    site["category"] = "音乐"
-                else:
-                    site["category"] = "综合"
+                site["category"] = "音乐" if ("音乐" in raw_name or "网易云" in raw_name or "听书" in raw_name or "fm" in raw_name.lower() or "dj" in raw_name.lower() or "dj" in s_key.lower()) else "综合"
                 site["searchable"] = 0
                 block_8_yinyue.append(site)
             else:
@@ -489,111 +430,95 @@ try:
                 site["category"] = "综合"
                 block_2_yingshi.append(site)
 
-            if site.get("category") not in ["少儿", "音乐"] and "searchable" not in site:
-                site["searchable"] = 1
+            if site.get("category") not in ["少儿", "音乐"] and "searchable" not in site: site["searchable"] = 1
 
         for site in block_2_yingshi:
-            if site.get("key") == "AQY":
-                site["name"] = "🦋 爱奇艺 ｜Tg：@huliys9"
+            if site.get("key") == "AQY": site["name"] = "🦋 爱奇艺 ｜Tg：@huliys9"
 
-        ordered_obj["sites"] = (
-            block_1_rebo + block_2_yingshi + block_3_duanju + block_4_dongman +
-            block_6_tiyu + block_7_shaoer + block_8_yinyue + block_5_cili + block_9_fuli
-        )
-        print(f"🚀 【洗牌结算】靶向隔离重排成功！")
-    except Exception as inner_e:
-        print(f"⚠️ 提示：美化与智能重排阶段跳过: {inner_e}")
+        ordered_obj["sites"] = (block_1_rebo + block_2_yingshi + block_3_duanju + block_4_dongman + block_6_tiyu + block_7_shaoer + block_8_yinyue + block_5_cili + block_9_fuli)
+    except: pass
 
     # ====================================================================
-    # 🎯 【超高精度对比：新旧 JSON 的 Sites 与 Lives 精准名录比对】
+    # 🎯 【Python 直连高精度比对与 TG 推送机制】
     # ====================================================================
     try:
-        old_sites_names = set()
-        old_lives_names = set()
-        
+        old_sites_names, old_lives_names = set(), set()
         if os.path.exists(tracker_path):
-            with open(tracker_path, 'r', encoding='utf-8') as f:
-                old_file_name = f.read().strip()
+            with open(tracker_path, 'r', encoding='utf-8') as f: old_file_name = f.read().strip()
             old_file_path = f"datas/{old_file_name}"
-            
             if os.path.exists(old_file_path):
                 with open(old_file_path, 'r', encoding='utf-8') as f:
                     old_data = json.load(f)
-                    old_sites_names = {site.get("name", "").strip() for site in old_data.get("sites", []) if site.get("name")}
-                    old_lives_names = {live.get("name", "").strip() for live in old_data.get("lives", []) if live.get("name")}
+                    old_sites_names = {s.get("name", "").strip() for s in old_data.get("sites", []) if s.get("name")}
+                    old_lives_names = {l.get("name", "").strip() for l in old_data.get("lives", []) if l.get("name")}
 
-        # 提取本次生成的最新名录
-        new_sites_names = {site.get("name", "").strip() for site in ordered_obj.get("sites", []) if site.get("name")}
-        new_lives_names = {live.get("name", "").strip() for live in ordered_obj.get("lives", []) if live.get("name")}
+        new_sites_names = {s.get("name", "").strip() for s in ordered_obj.get("sites", []) if s.get("name")}
+        new_lives_names = {l.get("name", "").strip() for l in ordered_obj.get("lives", []) if l.get("name")}
 
-        # 计算并分离 Sites 变动
         added_sites = sorted(list(new_sites_names - old_sites_names))
         deleted_sites = sorted(list(old_sites_names - new_sites_names))
-
-        # 计算并分离 Lives 变动
         added_lives = sorted(list(new_lives_names - old_lives_names))
         deleted_lives = sorted(list(old_lives_names - new_lives_names))
 
-        # 只要存在任何实际变化，就开始构造消息
         if added_sites or deleted_sites or added_lives or deleted_lives:
-            msg_lines = []
-            msg_lines.append("📝 *【 变动明细预览 】*")
-            msg_lines.append("📊 *━━━━━━━━━━━━━━━*")
-            
-            # --- Sites 点播变动 ---
+            msg_lines = ["📝 *【 变动明细预览 】*", "📊 *━━━━━━━━━━━━━━━*"]
             if added_sites or deleted_sites:
                 msg_lines.append("📺 *【点播线路变动】*")
                 if added_sites:
                     msg_lines.append("➕ *新增点播*：")
-                    for name in added_sites:
-                        msg_lines.append(f"🟢 {name}")
+                    msg_lines.extend([f"{name}" for name in added_sites])
                 if deleted_sites:
-                    if added_sites: msg_lines.append("") # 留一空行过渡
+                    if added_sites: msg_lines.append("")
                     msg_lines.append("➖ *剔除点播*：")
-                    for name in deleted_sites:
-                        msg_lines.append(f"🔴 {name}")
+                    msg_lines.extend([f"{name}" for name in deleted_sites])
                 msg_lines.append("📊 *━━━━━━━━━━━━━━━*")
-            
-            # --- Lives 直播变动 ---
             if added_lives or deleted_lives:
-                # 两个板块都有变动时，插入一个美观的分界
-                if len(msg_lines) > 2:
-                    msg_lines.append("")
+                if len(msg_lines) > 2: msg_lines.append("")
                 msg_lines.append("📡 *【直播源站变动】*")
                 if added_lives:
                     msg_lines.append("➕ *新增直播*：")
-                    for name in added_lives:
-                        msg_lines.append(f"🟢 {name}")
+                    msg_lines.extend([f"{name}" for name in added_lives])
                 if deleted_lives:
-                    if added_lives: msg_lines.append("") # 留一空行过渡
+                    if added_lives: msg_lines.append("")
                     msg_lines.append("➖ *剔除直播*：")
-                    for name in deleted_lives:
-                        msg_lines.append(f"🔴 {name}")
+                    msg_lines.extend([f"{name}" for name in deleted_lives])
                 msg_lines.append("📊 *━━━━━━━━━━━━━━━*")
 
-            # 保存生成的变动消息到文件，供 Actions 读取并作为判断标志
-            os.makedirs('datas', exist_ok=True)
-            with open('datas/tg_msg.txt', 'w', encoding='utf-8') as f:
-                f.write("\n".join(msg_lines))
-            print("✅ 【高精度对比】检测到点播或直播有实质变动，已生成变动报告！")
-        else:
-            print("⏭️ 【高精度对比】未检测到点播或直播发生任何名称变动，智能拦截推送。")
+            # 读取 GitHub 环境变量，直接由 Python 处理网络请求
+            tg_token = os.getenv("TG_TOKEN")
+            tg_chat_id = os.getenv("TG_CHAT_ID")
             
+            if tg_token and tg_chat_id:
+                current_time = (datetime.datetime.utcnow() + datetime.timedelta(hours=8)).strftime("%Y-%m-%d %H:%M")
+                detail_msg = "\n".join(msg_lines)
+                
+                full_msg = f"🔔 *老杨TV 全量版接口变更明细通知* 🔔\n\n"
+                full_msg += f"📅 *更新时间*：{current_time} (北京时间)\n"
+                full_msg += f"🚀 *变动说明*：检测到上游数据源更新或手工区线路调整，新接口配置已全自动编译上链！\n\n"
+                full_msg += f"{detail_msg}\n\n"
+                full_msg += f"👑 全量版连接已在后台无缝更新，更新接口即可，若电视端遇到断流请尝试重启软件或及时前往频道（@huliys9）获取当前最新密码锁！"
+
+                # 🚀 极其安全的 urllib 请求，规避 Shell 换行卡死
+                url = f"https://api.telegram.org/bot{tg_token}/sendMessage"
+                data = urllib.parse.urlencode({"chat_id": tg_chat_id, "parse_mode": "Markdown", "text": full_msg}).encode("utf-8")
+                req = urllib.request.Request(url, data=data)
+                try:
+                    with urllib.request.urlopen(req, timeout=15) as response:
+                        print("🚀 Telegram 通知通过 Python 直发成功！")
+                except Exception as net_err:
+                    print(f"❌ Telegram 发送网络失败: {net_err}")
+            else:
+                print("⚠️ 提示：未检测到绑定的 TG_TOKEN 或 TG_CHAT_ID，跳过通知发送。")
+        else:
+            print("⏭️ 没有任何名录实际变动，智能拦截推送。")
     except Exception as diff_err:
-        print(f"⚠️ 提示：高精度变动对比解析时发生异常: {diff_err}")
+        print(f"⚠️ 对比变动异常: {diff_err}")
 
-    # 安全地写出最新编译文件与跟踪器
-    with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(ordered_obj, f, ensure_ascii=False, indent=4)
-        
-    with open(tracker_path, 'w', encoding='utf-8') as f:
-        f.write(output_filename)
-        
-    print(f"🎉 全量版更新成功！配置已写出至: {output_path}")
-
+    with open(output_path, 'w', encoding='utf-8') as f: json.dump(ordered_obj, f, ensure_ascii=False, indent=4)
+    with open(tracker_path, 'w', encoding='utf-8') as f: f.write(output_filename)
+    print(f"🎉 编译写出完成: {output_path}")
 except Exception as e:
-    print(f"❌ 严重错误：最后的本地渲染失败: {e}")
+    print(f"❌ 运行失败: {e}")
 
 if not os.path.exists(lock_file_path) or "-" not in (open(lock_file_path, 'r', encoding='utf-8').read() if os.path.exists(lock_file_path) else ""):
-    with open(lock_file_path, 'w', encoding='utf-8') as f:
-        f.write(f"{current_month}-{current_token}")
+    with open(lock_file_path, 'w', encoding='utf-8') as f: f.write(f"{current_month}-{current_token}")
