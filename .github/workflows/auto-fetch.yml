@@ -32,45 +32,30 @@ jobs:
 
     - name: Text Merge JSON
       run: |
+        # 编译你生成的 Python 代码
         python modify_config.py
 
-    - name: Analyze changes and Send Telegram Notification
+    - name: Prepare Telegram Message and Push
       env:
         TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TG_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: |
-        git config --global core.quotepath false
-        git add datas/
-        
-        # 🛠️ 只有在暂存区存在实际文件内容变动时，才生成明细并触发通知
-        if ! git diff --cached --exit-code --quiet; then
-          echo "检测到接口文件已发生更新，正在提取变更明细..."
+        # 1. 检查是否存在高精度对比产生的变动消息
+        if [ -f "datas/tg_msg.txt" ]; then
+          echo "检测到接口存在实质点播/直播变化，开始组装推送文本..."
           
+          # 2. 获取北京时间
           CURRENT_TIME=$(TZ=Asia/Shanghai date "+%Y-%m-%d %H:%M")
           
-          # 🧠 升级版提取：用 Markdown 等宽代码语法包裹线路名称，让其在手机端呈现高亮背景底色块
-          ADDED_SITES=$(git diff --cached -U0 | grep '^[+][[:space:]]*"name":' | head -n 5 | sed -E 's/^[+][[:space:]]*"name":[[:space:]]*"([^"]+)".*/➕ ` \1 `/g' || true)
-          DELETED_SITES=$(git diff --cached -U0 | grep '^[-][[:space:]]*"name":' | head -n 5 | sed -E 's/^[-][[:space:]]*"name":[[:space:]]*"([^"]+)".*/➖ ` \1 `/g' || true)
+          # 3. 读取高精度名录变动细节
+          DETAIL_MSG=$(cat datas/tg_msg.txt)
           
-          # 拼装基础通知文案（严格使用你指定的精确抬头）
+          # 4. 拼装精准抬头、过渡及尾部广告文案
           MSG="🔔 *老杨TV 全量版接口变更明细通知* 🔔%0A%0A"
           MSG="${MSG}📅 *更新时间*：${CURRENT_TIME} (北京时间)%0A"
-          MSG="${MSG}🚀 *变动说明*：检测到上游数据源更新或手工区线路调整，新接口配置已全自动编译上链！%0A"
-          
-          # 🌟 精细化醒目排版优化区域
-          if [ ! -z "$ADDED_SITES" ] || [ ! -z "$DELETED_SITES" ]; then
-            MSG="${MSG}%0A📊 *━━━━━━━━━━━━━━━*%0A📝 *【 变动明细预览 】*%0A"
-            if [ ! -z "$ADDED_SITES" ]; then
-              MSG="${MSG}${ADDED_SITES}%0A"
-            fi
-            if [ ! -z "$DELETED_SITES" ]; then
-              MSG="${MSG}${DELETED_SITES}%0A"
-            fi
-            MSG="${MSG}📊 *━━━━━━━━━━━━━━━*%0A"
-          fi
-          
-          # 严格使用你指定的结尾文案
-          MSG="${MSG}%0A👑 全量版连接已在后台无缝更新，更新接口即可，若电视端遇到断流请尝试重启软件或及时前往频道（@huliys9）获取当前最新密码锁！"
+          MSG="${MSG}🚀 *变动说明*：检测到上游数据源更新或手工区线路调整，新接口配置已全自动编译上链！%0A%0A"
+          MSG="${MSG}${DETAIL_MSG}%0A%0A"
+          MSG="${MSG}👑 全量版连接已在后台无缝更新，更新接口即可，若电视端遇到断流请尝试重启软件或及时前往频道（@huliys9）获取当前最新密码锁！"
           
           # 🚀 通过 curl 发射到 Telegram
           if [ ! -z "$TG_TOKEN" ] && [ ! -z "$TG_CHAT_ID" ]; then
@@ -82,8 +67,11 @@ jobs:
           else
             echo "⚠️ 提示：未检测到绑定的 TG_TOKEN 或 TG_CHAT_ID，跳过通知发送。"
           fi
+          
+          # 5. 推送完毕后删除临时对比报告，不留脏文件在 Git 库
+          rm -f datas/tg_msg.txt
         else
-          echo "接口文件无任何实际内容变化，跳过通知流程。"
+          echo "接口点播/直播无实际内容增减，智能跳过通知推送流程。"
         fi
 
     - name: Commit and Push changes
@@ -92,7 +80,8 @@ jobs:
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --global core.quotepath false
         
-        # 🛠️ 若内容无变化优雅退出，有变化则 commit 并推送
+        # 检查有没有被更新的老杨TV全量版.json，同步推送到 GitHub 
+        git add datas/
         if ! git diff --cached --exit-code --quiet; then
           git commit -m "双源自适应硬核合并 (老杨TV全量版系列): $(date +'%Y-%m-%d %H:%M:%S')"
           git push origin HEAD:${{ github.ref_name }}
