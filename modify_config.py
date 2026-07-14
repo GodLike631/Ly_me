@@ -17,6 +17,12 @@ lock_file_path = 'datas/控制开关.txt'
 tracker_path = 'datas/最新接口文件名.txt'
 
 # ====================================================================
+# 🌐 【新增：国内 GitHub 加速代理配置】
+# 可随时修改此变量，末尾需保留斜杠 “/”，留空 "" 则不使用代理
+# ====================================================================
+GITHUB_PROXY = "https://gh-proxy.org/"
+
+# ====================================================================
 # ✍️ 【通道一：老杨专属点播手工加线区】
 # ====================================================================
 MY_CUSTOM_SITES = [
@@ -499,10 +505,27 @@ try:
                 current_time = (datetime.datetime.utcnow() + datetime.timedelta(hours=8)).strftime("%Y-%m-%d %H:%M")
                 detail_msg = "\n".join(msg_lines)
                 
+                # ------------------------------------------------------------------
+                # 🔗 【核心新增：动态生成订阅链接逻辑】
+                # 优先读取 GitHub Actions 的仓库和分支环境变量，如无则使用默认预设
+                # ------------------------------------------------------------------
+                repo_info = os.getenv("GITHUB_REPOSITORY", "GodLike631/test")
+                branch_info = os.getenv("GITHUB_REF_NAME", "main")
+                
+                # 拼接完整的原始链接
+                raw_url = f"https://raw.githubusercontent.com/{repo_info}/{branch_info}/datas/{output_filename}"
+                # 如果配置了代理，则在其前方拼接代理前缀
+                full_sub_url = f"{GITHUB_PROXY}{raw_url}" if GITHUB_PROXY else raw_url
+                # ------------------------------------------------------------------
+
                 full_msg = f"🔔 *老杨TV 全量版接口变更明细通知* 🔔\n\n"
                 full_msg += f"📅 *更新时间*：{current_time} (北京时间)\n"
                 full_msg += f"🚀 *变动说明*：检测到上游数据源更新或手工区线路调整，新接口配置已全自动编译上链！\n\n"
                 full_msg += f"{detail_msg}\n\n"
+                
+                # 插入订阅链接（使用 Markdown 的反引号，方便点击即可复制整个链接）
+                full_msg += f"🔗 *【 订阅链接 】 (点击即可自动复制)*：\n`{full_sub_url}`\n\n"
+                
                 full_msg += f"👑 全量版连接已在后台无缝更新，更新接口即可，若电视端遇到断流请尝试重启软件或及时前往频道（@huliys9）获取当前最新密码锁！"
 
                 # 🚀 极其安全的 urllib 请求，规避 Shell 换行卡死
