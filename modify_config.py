@@ -93,7 +93,7 @@ MY_CUSTOM_LIVES = [
         "name": "国产精品🔞｜Tg：@huliys9",
         "type": 0,
         "ua": "okhttp/5.3.2",
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/01%E5%9B%BD%E4%BA%A7%E7%B2%BE%E5%93%81_20260417_024507.m3u"
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/Ameria22/TV/refs/heads/main/data/01%E5%9B%BD%E4%BA%A7%E7%25E5%2593%2581_20260417_024507.m3u"
     },
     {
         "name": "4K福利🔞｜Tg：@huliys9",
@@ -142,7 +142,7 @@ MY_CUSTOM_LIVES = [
 ]
 
 # ====================================================================
-# ⏰ 【每月 1 号自动大洗牌与控制开关自动生成逻辑】 (原汁原味保留)
+# ⏰ 【每月 1 号自动大洗牌与控制开关自动生成逻辑】
 # ====================================================================
 today = datetime.datetime.now()
 current_month = str(today.month) 
@@ -185,7 +185,7 @@ output_path = f"datas/{output_filename}"
 print(f"🎯 最终结算 -> 目标输出：{output_filename}")
 
 # ====================================================================
-# 🛡️ 【金蝉脱壳：全量版过期旧线自动全文字大轰炸】 (原汁原味保留)
+# 🛡️ 【金蝉脱壳：全量版过期旧线自动全文字大轰炸】
 # ====================================================================
 old_configs = glob.glob('datas/老杨TV全量版*.json') + glob.glob('datas/老杨TV*.json')
 for old_file in old_configs:
@@ -214,7 +214,7 @@ for garbage in glob.glob('datas/config_*.json'):
 
 
 # ====================================================================
-# 🧠 【核心逻辑：正统 JSON 对象读取与合并逻辑】 (原汁原味保留)
+# 🧠 【核心逻辑：正统 JSON 对象读取与合并逻辑】
 # ====================================================================
 def load_json_safe(path):
     if not os.path.exists(path):
@@ -389,7 +389,7 @@ try:
         block_6_tiyu = []         
         block_7_shaoer = []       
         block_8_yinyue = []       
-        block_9_fuli = []         
+        block_9_fuli = []      
 
         tg_tail_count = 0
         for site in ordered_obj.get("sites", []):
@@ -504,6 +504,85 @@ try:
     except Exception as inner_e:
         print(f"⚠️ 提示：美化与智能重排阶段跳过: {inner_e}")
 
+    # ====================================================================
+    # 🎯 【超高精度对比：新旧 JSON 的 Sites 与 Lives 精准名录比对】
+    # ====================================================================
+    try:
+        old_sites_names = set()
+        old_lives_names = set()
+        
+        if os.path.exists(tracker_path):
+            with open(tracker_path, 'r', encoding='utf-8') as f:
+                old_file_name = f.read().strip()
+            old_file_path = f"datas/{old_file_name}"
+            
+            if os.path.exists(old_file_path):
+                with open(old_file_path, 'r', encoding='utf-8') as f:
+                    old_data = json.load(f)
+                    old_sites_names = {site.get("name", "").strip() for site in old_data.get("sites", []) if site.get("name")}
+                    old_lives_names = {live.get("name", "").strip() for live in old_data.get("lives", []) if live.get("name")}
+
+        # 提取本次生成的最新名录
+        new_sites_names = {site.get("name", "").strip() for site in ordered_obj.get("sites", []) if site.get("name")}
+        new_lives_names = {live.get("name", "").strip() for live in ordered_obj.get("lives", []) if live.get("name")}
+
+        # 计算并分离 Sites 变动
+        added_sites = sorted(list(new_sites_names - old_sites_names))
+        deleted_sites = sorted(list(old_sites_names - new_sites_names))
+
+        # 计算并分离 Lives 变动
+        added_lives = sorted(list(new_lives_names - old_lives_names))
+        deleted_lives = sorted(list(old_lives_names - new_lives_names))
+
+        # 只要存在任何实际变化，就开始构造消息
+        if added_sites or deleted_sites or added_lives or deleted_lives:
+            msg_lines = []
+            msg_lines.append("📝 *【 变动明细预览 】*")
+            msg_lines.append("📊 *━━━━━━━━━━━━━━━*")
+            
+            # --- Sites 点播变动 ---
+            if added_sites or deleted_sites:
+                msg_lines.append("📺 *【点播线路变动】*")
+                if added_sites:
+                    msg_lines.append("➕ *新增点播*：")
+                    for name in added_sites:
+                        msg_lines.append(f"🟢 {name}")
+                if deleted_sites:
+                    if added_sites: msg_lines.append("") # 留一空行过渡
+                    msg_lines.append("➖ *剔除点播*：")
+                    for name in deleted_sites:
+                        msg_lines.append(f"🔴 {name}")
+                msg_lines.append("📊 *━━━━━━━━━━━━━━━*")
+            
+            # --- Lives 直播变动 ---
+            if added_lives or deleted_lives:
+                # 两个板块都有变动时，插入一个美观的分界
+                if len(msg_lines) > 2:
+                    msg_lines.append("")
+                msg_lines.append("📡 *【直播源站变动】*")
+                if added_lives:
+                    msg_lines.append("➕ *新增直播*：")
+                    for name in added_lives:
+                        msg_lines.append(f"🟢 {name}")
+                if deleted_lives:
+                    if added_lives: msg_lines.append("") # 留一空行过渡
+                    msg_lines.append("➖ *剔除直播*：")
+                    for name in deleted_lives:
+                        msg_lines.append(f"🔴 {name}")
+                msg_lines.append("📊 *━━━━━━━━━━━━━━━*")
+
+            # 保存生成的变动消息到文件，供 Actions 读取并作为判断标志
+            os.makedirs('datas', exist_ok=True)
+            with open('datas/tg_msg.txt', 'w', encoding='utf-8') as f:
+                f.write("\n".join(msg_lines))
+            print("✅ 【高精度对比】检测到点播或直播有实质变动，已生成变动报告！")
+        else:
+            print("⏭️ 【高精度对比】未检测到点播或直播发生任何名称变动，智能拦截推送。")
+            
+    except Exception as diff_err:
+        print(f"⚠️ 提示：高精度变动对比解析时发生异常: {diff_err}")
+
+    # 安全地写出最新编译文件与跟踪器
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(ordered_obj, f, ensure_ascii=False, indent=4)
         
