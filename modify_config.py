@@ -17,10 +17,16 @@ lock_file_path = 'datas/控制开关.txt'
 tracker_path = 'datas/最新接口文件名.txt'
 
 # ====================================================================
-# 🌐 【新增：国内 GitHub 加速代理配置】
-# 可随时修改此变量，末尾需保留斜杠 “/”，留空 "" 则不使用代理
+# 🌐 【通道配置：国内 GitHub 加速代理】
 # ====================================================================
 GITHUB_PROXY = "https://gh-proxy.org/"
+
+# ====================================================================
+# 🚫 【新增：自定义黑名单关键词过滤区】
+# 在下方列表中填入指定关键词（支持多个），脚本合并时会自动删除包含这些关键词的
+# 点播线路与直播源。如果不需要过滤，保持列表为空即可。
+# ====================================================================
+BLOCK_KEYWORDS = ["羊壳", "测试", "不可用"]
 
 # ====================================================================
 # ✍️ 【通道一：老杨专属点播手工加线区】
@@ -162,7 +168,6 @@ is_reset_day = (today.day == 1)
 saved_month = ""
 saved_code = ""
 
-# 新增：新密码锁生成触发标记，默认关闭
 is_new_token_generated = False
 
 if os.path.exists(lock_file_path):
@@ -178,7 +183,6 @@ if is_reset_day and saved_month != current_month:
     with open(lock_file_path, 'w', encoding='utf-8') as f:
         f.write(f"{current_month}-{current_token}")
     print(f"⏰ 【每月1号全新硬核洗牌】已全自动抽签生成本月新密锁: {current_token}")
-    # 🎯 触发核心改动点：满足1号且月份不一致，证明真正重新洗牌生成了新密码
     is_new_token_generated = True
 elif is_reset_day and saved_month == current_month:
     current_token = saved_code
@@ -270,6 +274,20 @@ combined_parses = json_haitun.get("parses", []) + json_lz.get("parses", []) + js
 custom_keys = {site.get("key") for site in MY_CUSTOM_SITES if site.get("key")}
 upstream_sites = haitun_sites + lz_nsfw_list + cnb_sites
 clean_upstream_sites = [site for site in upstream_sites if site.get("key") not in custom_keys]
+
+# ------------------------------------------------------------------
+# 🎯 【过滤点播区核心注入】：从源头过滤包含指定黑名单关键词的点播线路
+# ------------------------------------------------------------------
+if BLOCK_KEYWORDS:
+    filtered_upstream_sites = []
+    for site in clean_upstream_sites:
+        s_name = site.get("name", "")
+        # 如果线路名称包含任何一个黑名单关键词（忽略大小写模糊比对），则剔除
+        if any(kw.lower() in s_name.lower() for kw in BLOCK_KEYWORDS if kw):
+            continue
+        filtered_upstream_sites.append(site)
+    clean_upstream_sites = filtered_upstream_sites
+
 json_cnb["sites"] = clean_upstream_sites + MY_CUSTOM_SITES
 
 custom_live_names = {live.get("name") for live in MY_CUSTOM_LIVES if live.get("name")}
@@ -282,9 +300,26 @@ clean_base_lives = [
     and "日本女友" not in live.get("name", "")
 ]
 
+# ------------------------------------------------------------------
+# 🎯 【过滤直播区核心注入】：同步过滤包含指定黑名单关键词的直播源
+# ------------------------------------------------------------------
+if BLOCK_KEYWORDS:
+    filtered_base_lives = []
+    for live in clean_base_lives:
+        l_name = live.get("name", "")
+        if any(kw.lower() in l_name.lower() for kw in BLOCK_KEYWORDS if kw):
+            continue
+        filtered_base_lives.append(live)
+    clean_base_lives = filtered_base_lives
+
 inserted_count = 0 
 for custom_live in MY_CUSTOM_LIVES:
     live_name = custom_live.get("name", "")
+    
+    # 手工手工定制区同样执行黑名单拦截
+    if BLOCK_KEYWORDS and any(kw.lower() in live_name.lower() for kw in BLOCK_KEYWORDS if kw):
+        continue
+        
     if "🔞" in live_name:
         clean_base_lives.append(custom_live)
     else:
@@ -370,6 +405,7 @@ try:
 
         block_1_rebo, block_2_yingshi, block_3_duanju, block_4_dongman, block_5_cili, block_6_tiyu, block_7_shaoer, block_8_yinyue, block_9_fuli = [], [], [], [], [], [], [], [], []
         tg_tail_count = 0
+ 
         for site in ordered_obj.get("sites", []):
             if "name" not in site: continue
             raw_name = site["name"]
@@ -450,7 +486,7 @@ try:
 
             if site.get("category") not in ["少儿", "音乐"] and "searchable" not in site: site["searchable"] = 1
 
-        for site in block_2_yingshi:
+         for site in block_2_yingshi:
             if site.get("key") == "AQY": site["name"] = "🦋 爱奇艺 ｜Tg：@huliys9"
 
         ordered_obj["sites"] = (block_1_rebo + block_2_yingshi + block_3_duanju + block_4_dongman + block_6_tiyu + block_7_shaoer + block_8_yinyue + block_5_cili + block_9_fuli)
@@ -459,7 +495,6 @@ try:
     # ====================================================================
     # 🎯 【Python 直连高精度比对与 TG 推送机制】
     # ====================================================================
-    # 提取公共环境变量与链接构建逻辑，保持原有逻辑不发生变化
     tg_token = os.getenv("TG_TOKEN")
     tg_chat_id = os.getenv("TG_CHAT_ID")
     repo_info = os.getenv("GITHUB_REPOSITORY", "GodLike631/test")
@@ -470,7 +505,7 @@ try:
     current_time = (datetime.datetime.utcnow() + datetime.timedelta(hours=8)).strftime("%Y-%m-%d %H:%M")
 
     # ------------------------------------------------------------------
-    # 🌟 【新增核心功能：新密码专属推送通道（完全独立解耦）】
+    # 🌟 【新密码专属推送通道】
     # ------------------------------------------------------------------
     if is_new_token_generated and tg_token and tg_chat_id:
         try:
@@ -489,7 +524,7 @@ try:
         except Exception as pwd_err:
             print(f"❌ [专属密码通道] 发送通知失败: {pwd_err}")
 
-    # 原有的高精度线路比对逻辑及推送，完全保留，未改动任何判断
+    # 原有的高精度线路比对逻辑及推送
     try:
         old_sites_names, old_lives_names = set(), set()
         if os.path.exists(tracker_path):
