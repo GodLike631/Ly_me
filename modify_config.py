@@ -486,7 +486,7 @@ try:
 
             if site.get("category") not in ["少儿", "音乐"] and "searchable" not in site: site["searchable"] = 1
 
-         for site in block_2_yingshi:
+        for site in block_2_yingshi:
             if site.get("key") == "AQY": site["name"] = "🦋 爱奇艺 ｜Tg：@huliys9"
 
         ordered_obj["sites"] = (block_1_rebo + block_2_yingshi + block_3_duanju + block_4_dongman + block_6_tiyu + block_7_shaoer + block_8_yinyue + block_5_cili + block_9_fuli)
