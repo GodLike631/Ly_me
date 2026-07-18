@@ -43,9 +43,10 @@ jobs:
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --global core.quotepath false
         
+        # 核心优化：完美自动捕获并上传 datas/ 下的所有新老本备份文件
         git add datas/
         if ! git diff --cached --exit-code --quiet; then
-          git commit -m "双源自适应硬核合并 (老杨TV全量版系列): $(date +'%Y-%m-%d %H:%M:%S')"
+          git commit -m "双源自适应硬核合并 (老杨TV全量版系列 & 注入智能容灾机制): $(date +'%Y-%m-%d %H:%M:%S')"
           git push origin HEAD:${{ github.ref_name }}
         else
           echo "文件内容没有发生实际变化，无需更新，优雅退出。"
