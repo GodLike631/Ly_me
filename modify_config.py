@@ -556,7 +556,7 @@ try:
     # ====================================================================
     tg_token = os.getenv("TG_TOKEN")
     tg_chat_id = os.getenv("TG_CHAT_ID")
-    repo_info = os.getenv("GITHUB_REPOSITORY", "GodLike631/test")
+    repo_info = os.getenv("GITHUB_REPOSITORY", "GodLike631/Ly_me")
     branch_info = os.getenv("GITHUB_REF_NAME", "main")
     
     # 修复补全路径 refs/heads/
