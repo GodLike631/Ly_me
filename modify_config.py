@@ -30,7 +30,7 @@ DEFAULT_LOGO_URL = "https://img.naixiai.cn/2026/06/18/IMG_6638.jpeg"
 # 自定义黑名单关键词（命中则直接剔除该 sites 或 lives 站点）
 BLOCK_KEYWORDS = ["羊壳", "弹幕", "不可用"]
 
-# 彻底抹除的狗皮膏药水印及广告文本
+# 彻底抹除的水印及广告文本
 UPSTREAM_DIRTY_WORDS = ['🐬', '海豚影视', '海豚', '完全免费，如有收费的都是骗子', '交流群 TG：@hshsjk9']
 
 # 网页级 WebView 去广告高级拦截器需要绑定的恶意广告域名
