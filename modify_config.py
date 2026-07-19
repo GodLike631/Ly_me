@@ -385,10 +385,9 @@ def object_level_wash_and_compile():
         "lives": clean_base_lives
     })
 
-    # 🎯 完美订正：以最新底包规范为准，统一抹平为线上绝对 URL 链接
     for s in final_obj.get("sites", []):
         if s.get("key") in ["hajim-腾讯备", "茫茫"]:
-            s["spider"] = "https://cnb.cool/fish2018/xs/-/git/raw/main/spider.jar"
+            s["spider"] = "./tvbox.jar"
 
     if "doh" in final_obj and isinstance(final_obj["doh"], list):
         for doh_item in final_obj["doh"]:
