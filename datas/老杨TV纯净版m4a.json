@@ -62,7 +62,7 @@
             "changeable": 1,
             "ext": "https://fastlink.cokey.xyz/f/1MOEc5/%E8%85%BE%E8%85%BE.js",
             "category": "综合",
-            "spider": "./tvbox.jar"
+            "spider": "https://cnb.cool/fish2018/xs/-/git/raw/main/spider.jar"
         },
         {
             "key": "txvm",
