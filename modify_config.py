@@ -404,6 +404,8 @@ def object_level_wash_and_compile():
                     if h not in ad_hosts: ad_hosts.append(h)
         js_rule = {"name": "云端高级去广告JS注入", "hosts": ad_hosts, "script": config.CUSTOM_AD_BLOCK_JS}
         final_obj["rules"] = [js_rule] + [r for r in current_rules if r.get("name") != "云端高级去广告JS注入"]
+    # 🎯 终极修复：把生成文件最开头的本地相对 spider 路径，强行修正为远程绝对路径
+    final_obj["spider"] = "https://cnb.cool/fish2018/xs/-/git/raw/main/spider.jar"
 
     return final_obj
 
