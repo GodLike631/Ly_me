@@ -36,7 +36,7 @@ UPSTREAM_DIRTY_WORDS = ['🐬', '海豚影视', '海豚', '完全免费，如有
 # 网页级 WebView 去广告高级拦截器需要绑定的恶意广告域名
 AD_HOSTS_LIST = ["vip.wwgz.cn", "lziplayer.com", "m3u8.apibdzy.com", "cj.ffzyapi.com", "api.hbzyapi.com"]
 
-# 1. 纯净版分流依据：全量版保留这些词，但“客厅纯净版”会根据这些词进行全面过滤
+# 1. 纯净版分流依据：全量版保留 these 词，但“客厅纯净版”会根据 these 词进行全面过滤
 NSFW_KEYWORDS = ["🔞", "福利", "探花", "约炮", "色播", "av", "爆料", "蜜桃"]
 
 # 2. 上游全线杂质强力清洗：不管是全量版还是纯净版，只要点播或直播源名字包含以下词，直接永久丢弃
@@ -61,8 +61,12 @@ LOGO_PREFIX = "🦋"
 WALLPAPER_FULL = "https://img.naixiai.cn/2026/wallpapers/full_vip.jpg"
 WALLPAPER_CLEAN = "https://img.naixiai.cn/2026/wallpapers/home_clean.jpg"
 
-# 专属核心站点的版权声明与致谢文案
-HOT_VIDEO_SITE_NAME = f"热播 • APP｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜{MY_TG_SUFFIX.strip('｜')}"
+# 【🎯 核心优化：只改这里，就能实现任意线路换名并强制置顶第一位】
+# 1. 强制置顶第一位的线路在上游底包中对应的唯一 key（如果上游变了，改这里即可）
+HOT_VIDEO_KEY = "热播影视"
+
+# 2. 你想展示在电视端第一位的线路名称与版权声明（在这里直接改名字，比如改成金牌）
+HOT_VIDEO_SITE_NAME = f"🦋热播 • APP｜此接口非原创，合并自海豚佬 and 鱼佬接口，感谢两位大佬的付出，如有侵权，联系删除｜{MY_TG_SUFFIX.strip('｜')}"
 
 # 【🎯 新增功能：自定义线路名称批量替换映射表】
 # 可以在这里指定把线路名中的某些词替换成你指定的词，不想替换保持空字典即可
@@ -87,7 +91,7 @@ TRAP_LIVE_CHANNEL = f"👉 线路已过期 ➡️ 加QQ群“{MY_QQ_GROUP}”获
 # ====================================================================
 thanks_warning = f"\n\n👑如果遇到失效 or 断流，请及时回 Telegram 频道（{MY_PROMO_CHANNEL}）或微信群获取当前最新密码锁！"
 
-WELCOME_NOTICE_FULL = "欢迎使用【老杨TV粉丝专属全量至尊专线】！本接口结合佬&鱼佬的优质核心资源缝合而成，纯净无广告！重要提示：本接口密码不定期全自动更换！"
+WELCOME_NOTICE_FULL = "欢迎使用【老杨TV粉丝专属全量专线】！本接口结合佬&鱼佬的优质核心资源缝合而成，纯净无广告！重要提示：本接口密码不定期全自动更换！"
 WELCOME_NOTICE_CLEAN = "欢迎使用【老杨TV专属绿色客厅专线】！本接口已全面过滤敏感、擦边 and 福利内容，全家老少看电视更安全、更绿色！"
 
 # DOH 注入项
@@ -95,7 +99,7 @@ ALI_DOH_CONFIG = {"name": "AliDNS", "url": "https://dns.alidns.com/dns-query", "
 
 # 网页级 WebView 去广告高级拦截器注入脚本
 CUSTOM_AD_BLOCK_JS = [
-    "console.log('老楊TV高級WebView攔截器啟動');",
+    "console.log('老楊TV高級WebView攔確器啟動');",
     "window.addEventListener('DOMContentLoaded', function() {",
     "   document.querySelectorAll('video').forEach(v => { v.muted = true; v.play().catch(e=>{}); });",
     "   Function.prototype.__constructor__ = Function.prototype.constructor;",
@@ -544,7 +548,7 @@ try:
             is_guazi = "瓜子" in raw_name or "GZ" == s_key
             is_nsfw = False if is_guazi else ("🔞" in raw_name or "色播" in raw_name or "av" in s_key.lower() or "瓜" in raw_name or "爆料" in raw_name or "chat" in raw_name.lower() or "cam" in raw_name.lower() or "panda" in raw_name.lower() or "video" in raw_name.lower() or "md" in s_key.lower())
             
-            if s_key == "热播影视":
+            if s_key == HOT_VIDEO_KEY:
                 site["name"] = HOT_VIDEO_SITE_NAME
                 site["category"] = "综合"
                 block_1_rebo.append(site)
@@ -650,6 +654,7 @@ try:
     full_raw_url = f"https://raw.githubusercontent.com/{repo_info}/refs/heads/{branch_info}/datas/{full_output_filename}"
     clean_raw_url = f"https://raw.githubusercontent.com/{repo_info}/refs/heads/{branch_info}/datas/{clean_output_filename}"
     
+    # 🎯 【全局修正】把变量定义放在 if 判断的最外层，彻底从物理层避免 NameError 报错
     full_sub_url = f"{GITHUB_PROXY}{full_raw_url}" if GITHUB_PROXY else full_raw_url
     clean_sub_url = f"{GITHUB_PROXY}{clean_raw_url}" if GITHUB_PROXY else clean_raw_url
     
