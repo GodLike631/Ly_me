@@ -11,7 +11,7 @@ VERSION = "3.1.0"
 BUILD_DATE = "2026.07.20"
 
 # 🎯 专属外层大总包 Jar 远程绝对路径
-GLOBAL_SPIDER_JAR = "https://cnb.cool/fish2018/xs/-/git/raw/main/spider.jar"
+GLOBAL_SPIDER_JAR = "https://cnb.cool/fish2035/xs/-/git/raw/main/spider.jar"
 
 # 统一提取的 Magic Number
 DEFAULT_TIMEOUT = 10     # 默认网络请求超时时间 (秒)
