@@ -80,12 +80,12 @@ CATEGORY_RULES = {
 
 # 核心路径与图标的正则/精准替换映射表
 PATH_REPLACEMENTS = {
-    r'\./spider\.jar': 'https://cnb.cool/fish2018/xs/-/git/raw/main/spider.jar',
-    r'\./XBPQ/': 'https://cnb.cool/fish2018/xs/-/git/raw/main/XBPQ/',
-    r'\./XYQHiker': 'https://cnb.cool/fish2018/xs/-/git/raw/main/XYQHiker/',  # 去掉尾部固定斜杠，兼容性更强
-    r'\./js/': 'https://cnb.cool/fish2018/xs/-/git/raw/main/js/',
-    r'\./json/': 'https://cnb.cool/fish2018/xs/-/git/raw/main/json/',
-    r'\./py/': 'https://cnb.cool/fish2018/xs/-/git/raw/main/py/',
+    r'\./spider\.jar': 'https://cnb.cool/fish2035/xs/-/git/raw/main/spider.jar',
+    r'\./XBPQ/': 'https://cnb.cool/fish2035/xs/-/git/raw/main/XBPQ/',
+    r'\./XYQHiker': 'https://cnb.cool/fish2035/xs/-/git/raw/main/XYQHiker/',  # 去掉尾部固定斜杠，兼容性更强
+    r'\./js/': 'https://cnb.cool/fish2035/xs/-/git/raw/main/js/',
+    r'\./json/': 'https://cnb.cool/fish2035/xs/-/git/raw/main/json/',
+    r'\./py/': 'https://cnb.cool/fish2035/xs/-/git/raw/main/py/',
     r'http://127\.0\.0\.1:9978/file/TVBox/logo\.png': DEFAULT_LOGO_URL
 }
 
