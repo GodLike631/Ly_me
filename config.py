@@ -175,11 +175,7 @@ MY_CUSTOM_SITES = [
 # ====================================================================
 # 📺 【通道二：老杨专属直播手工加线区】
 # ====================================================================
-MY_CUSTOM_LIVES = [
-
-
-https://raw.githubusercontent.com/GodLike631/Ly/refs/heads/Live/datas/custom_lives.m3u
-	
+MY_CUSTOM_LIVES = [	
 	{
         "name": "央卫TV",
         "type": 0,
