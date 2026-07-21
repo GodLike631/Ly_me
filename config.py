@@ -177,6 +177,12 @@ MY_CUSTOM_SITES = [
 # ====================================================================
 MY_CUSTOM_LIVES = [	
 	{
+        "name": "老杨TV",
+        "type": 0,
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/GodLike631/Ly/refs/heads/Live/datas/custom_lives.m3u",
+        "ua": "okhttp/5.3.2"
+    },
+	{
         "name": "央卫TV",
         "type": 0,
         "ua": "okhttp/5.3.2",
@@ -187,13 +193,7 @@ MY_CUSTOM_LIVES = [
         "type": 0,
         "ua": "okhttp/5.3.2",
         "url": "https://develop202.github.io/migu_video/interface.txt"
-    },
-    {
-        "name": "老杨TV",
-        "type": 0,
-        "url": "https://ghfast.top/https://raw.githubusercontent.com/GodLike631/Ly/refs/heads/Live/datas/custom_lives.m3u",
-        "ua": "okhttp/5.3.2"
-    },
+    },    
 	{
         "name": "综合直播",
         "type": 0,
