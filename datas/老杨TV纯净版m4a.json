@@ -2568,6 +2568,12 @@
             "url": "https://develop202.github.io/migu_video/interface.txt"
         },
         {
+            "name": "🦋 裤佬TV｜Tg：@huliys9",
+            "type": 0,
+            "ua": "okhttp",
+            "url": "https://live.445569.xyz/live.m3u"
+        },
+        {
             "name": "🦋 综合直播｜Tg：@huliys9",
             "type": 0,
             "playerType": 2,
@@ -2714,18 +2720,6 @@
             "type": 0,
             "ua": "okhttp",
             "url": "https://raw.githubusercontent.com/xJEYDAin/iptv/main/output/all_merged.m3u"
-        },
-        {
-            "name": "裤佬TV｜Tg：@huliys9",
-            "type": 0,
-            "ua": "okhttp",
-            "url": "https://gh-proxy.org/https://raw.githubusercontent.com/Jsnzkpg/Jsnzkpg/Jsnzkpg/Jsnzkpg1.m3u"
-        },
-        {
-            "name": "裤佬TV2｜Tg：@huliys9",
-            "type": 0,
-            "ua": "okhttp",
-            "url": "https://tv.tmxk.kdns.fr/ex64181y"
         },
         {
             "name": "live.m3u｜Tg：@huliys9",
