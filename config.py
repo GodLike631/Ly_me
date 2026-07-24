@@ -40,7 +40,7 @@ DEFAULT_LOGO_URL = "https://img.naixiai.cn/2026/06/18/IMG_6638.jpeg"
 # ====================================================================
 # 🚫 【二、双版本过滤依据、广告拦截与恶意杂质直接清洗区】
 # ====================================================================
-BLOCK_KEYWORDS = ("羊壳", "弹幕", "Gather", "Mytv")
+BLOCK_KEYWORDS = ("羊壳", "弹幕", "Gather", "Mytv", "裤佬TV")
 UPSTREAM_DIRTY_WORDS = ('🐬', '海豚影视', '海豚', '完全免费，如有收费的都是骗子', '交流群 TG：@hshsjk9')
 AD_HOSTS_LIST = ["vip.wwgz.cn", "lziplayer.com", "m3u8.apibdzy.com", "cj.ffzyapi.com", "api.hbzyapi.com"]
 
@@ -193,7 +193,13 @@ MY_CUSTOM_LIVES = [
         "type": 0,
         "ua": "okhttp/5.3.2",
         "url": "https://develop202.github.io/migu_video/interface.txt"
-    },    
+    },   
+	{
+            "name": "裤佬TV｜Tg：@huliys9",
+            "type": 0,
+            "ua": "okhttp",
+            "url": "https://live.445569.xyz/live.m3u"
+        },
 	{
         "name": "综合直播",
         "type": 0,
