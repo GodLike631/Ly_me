@@ -231,15 +231,6 @@ MY_CUSTOM_LIVES = [
       "playerType": 2
     },
     {
-      "name": "myTV「香港」",
-      "type": 3,
-      "url": "https://iptv.1989.click/myTV/playlist.m3u",
-      "epg":"https://material.1989.click/epg.xml.gz",
-      "ua": "okhttp/3.8.1",
-      "timeout": 10,
-      "playerType": 2
-    },
-    {
       "name": "Sport「体育」",
       "type": 3,
       "url": "https://iptv.1989.click/sprt/playlist.m3u",
