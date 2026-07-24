@@ -214,7 +214,7 @@ MY_CUSTOM_LIVES = [
         "url": "https://ghfast.top/https://raw.githubusercontent.com/GodLike631/test/refs/heads/main/datas/%E8%B6%85%E7%A8%B3%E5%AE%9A%E6%B5%81%E7%95%85.txt"
     },
 	{
-      "name": "Gather「IPTV」",
+      "name": "Gather「IPTV」(梯子）",
       "type": 3,
       "url": "https://iptv.1989.click/playlist.m3u",
       "epg":"https://material.1989.click/epg.xml.gz",
