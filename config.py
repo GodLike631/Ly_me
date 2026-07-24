@@ -231,15 +231,6 @@ MY_CUSTOM_LIVES = [
       "playerType": 2
     },
     {
-      "name": "Sport「体育」",
-      "type": 3,
-      "url": "https://iptv.1989.click/sprt/playlist.m3u",
-      "epg":"https://material.1989.click/epg.xml.gz",
-      "ua": "okhttp/3.8.1",
-      "timeout": 10,
-      "playerType": 2
-    },
-    {
         "name": "锋云直播",
         "type": 3,
         "url": "https://gh-proxy.org/https://raw.githubusercontent.com/807080747/zv/refs/heads/main/suale.txt",
